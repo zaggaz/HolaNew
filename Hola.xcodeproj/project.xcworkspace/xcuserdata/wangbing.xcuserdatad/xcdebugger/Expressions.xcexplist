@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[JChatViewController initView]:JChatViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "chatPartner">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[JHomeRightViewController tableView:didSelectRowAtIndexPath:]:JHomeRightViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "pCurPerson.name">
+            </PersistentString>
+            <PersistentString
+               value = "indexPath.row">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
