@@ -409,19 +409,19 @@
     UIColor *fromColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
     UIColor *toColor = [UIColor colorWithRed:255 green:120 blue:0 alpha:0.1];
     CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-    colorAnimation.duration = 5;
+    colorAnimation.duration = 4;
     colorAnimation.fromValue = (id)fromColor.CGColor;
     colorAnimation.toValue = (id)toColor.CGColor;
     [aLayer addAnimation:colorAnimation forKey:@"colorAnimationBG"];
     UIColor *fromColor1 = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
     UIColor *toColor1 = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.1];
     CABasicAnimation *colorAnimation1 = [CABasicAnimation animationWithKeyPath:@"borderColor"];
-    colorAnimation1.duration = 6;
+    colorAnimation1.duration = 4;
     colorAnimation1.fromValue = (id)fromColor1.CGColor;
     colorAnimation1.toValue = (id)toColor1.CGColor;
     
     [aLayer addAnimation:colorAnimation1 forKey:@"colorAnimation"];
-    [self performSelector:@selector(waveAnimation:) withObject:waveLayer afterDelay:5];
+    [self performSelector:@selector(waveAnimation:) withObject:waveLayer afterDelay:4];
 
 //    if(bShowWave == YES)
 //        [self performSelector:@selector(getMatchedUsers:) withObject:waveLayer afterDelay:5];
