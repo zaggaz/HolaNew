@@ -34,7 +34,7 @@
     
     waveLayer=[CALayer layer];
     waveLayer.borderWidth =0.2;
-    waveLayer.cornerRadius =5.0;
+    waveLayer.cornerRadius = 4;
     [mViewSearchContainer.layer addSublayer:waveLayer];
     [waveLayer setHidden:NO];
     
@@ -47,11 +47,11 @@
 
     
     if (IS_IPHONE5) {
-        waveLayer.frame = CGRectMake(screenWidth / 2 - 5, yPos + 30 - 5, 10, 10);
+        waveLayer.frame = CGRectMake(screenWidth / 2 - 4, yPos + 30 - 5, 8, 8);
     }else{
-        waveLayer.frame = CGRectMake(screenWidth / 2 - 5, yPos + 30 - 5 , 10, 10);
+        waveLayer.frame = CGRectMake(screenWidth / 2 - 4, yPos + 30 - 5 , 8, 8);
     }
-
+    
     
     
     [self.view addSubview:  mViewSearchContainer];
