@@ -513,7 +513,7 @@
 {
     //NSMutableArray* photos=[Engine gPersonInfo].mArrPic;
     NSMutableArray* photos=[Engine gPersonInfo].mArrPic;
-    [mLblOtherPhotoEditTitle setText:[NSString stringWithFormat:@"PHOTOS • %d", (int)[photos count]]];
+    [mLblOtherPhotoEditTitle setText:[NSString stringWithFormat:@"Photos • %d", (int)[photos count]]];
     [[mViewEditUserOtherPhotoContainer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [mViewEditUserOtherPhotoContainer setFrame:CGRectMake(0,0,30+60*photos.count, 60)];
     [mScrollEditUserOtherPhotos setContentSize:CGSizeMake(30+photos.count*60, 60)];
