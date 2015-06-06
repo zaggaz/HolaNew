@@ -127,7 +127,7 @@
                     NSArray *photos = [data objectForKey:@"photos"];
                     if(!mCurPerson)
                         mCurPerson = [[Person alloc]setDataWithDictionary:pDict];
-                    mPagePhoto.numberOfPages=(int)[photos count];
+                    mPagePhoto.numberOfPages=(int)[photos count] + 1;
                     mArrUserPhotos = [photos mutableCopy];
                     [mArrUserPhotos insertObject:[pDict objectForKey:@"photourl"] atIndex:0];
                     [self initUserPhotos];

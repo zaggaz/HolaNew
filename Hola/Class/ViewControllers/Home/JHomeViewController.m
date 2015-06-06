@@ -36,7 +36,7 @@
     [super viewDidLoad];
      mArrUsers = [[NSMutableArray alloc]init];
 
-    [NSTimer scheduledTimerWithTimeInterval:10.0
+    [NSTimer scheduledTimerWithTimeInterval:8.8
                                      target:self
                                    selector:@selector(redisplayUserFeed:)
                                    userInfo:nil
@@ -88,7 +88,7 @@
 
     if([Engine bUserSettingChanged] == YES)
     {
-        [self showSearchRadarTo:1.0f];
+        [self setRadarViewAlphaTo:1.0f];
 //        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [mArrUsers removeAllObjects];
         [self.frontCardView removeFromSuperview];
@@ -104,8 +104,8 @@
 -(void)redisplayUserFeed:(id)sender
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    if (mArrUsers.count == 0) {
-        [self showSearchRadarTo:1.0f];
+    if (mArrUsers.count == 0 && !self.frontCardView) {
+        [self setRadarViewAlphaTo:1.0f];
         [Engine setBUserSettingChanged:NO];
         [self.frontCardView removeFromSuperview];
         [self.backCardView removeFromSuperview];
@@ -113,7 +113,7 @@
     }
 }
 
--(void) showSearchRadarTo:(float)alpha{
+-(void) setRadarViewAlphaTo:(float)alpha{
     [UIView animateWithDuration:0.3 animations:^() {
         mViewSearchContainer.alpha = alpha;
     }];
@@ -157,12 +157,12 @@
                     }
                     if([mArrUsers count] > 0)
                     {
-                        [self showSearchRadarTo:0.0f];
+                        [self setRadarViewAlphaTo:0.0f];
                         [self showUsers];
                     }
                     else
                     {
-                        [self showSearchRadarTo:1.0f];
+                        [self setRadarViewAlphaTo:1.0f];
                     }
                 }
                 else
@@ -235,7 +235,7 @@
     self.frontCardView = self.backCardView;
     if(!self.backCardView)
     {
-        [self showSearchRadarTo:1.0f];
+        [self setRadarViewAlphaTo:1.0f];
     }
     [frontCardView addGestureRecognizer:recognizer];
     
