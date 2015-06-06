@@ -33,6 +33,8 @@
     IBOutlet UIView *mViewEditUserOtherPhotoContainer;
     IBOutlet UITextField *mTxtEditEmail;
     IBOutlet UITextField *mTxtEditBirthday;
+    UIDatePicker *datePicker;
+    
     IBOutlet UITextField *mTxtEditCity;
     IBOutlet UISegmentedControl *mSegEditGender;
     IBOutlet UITextView *mTxtAbout;

@@ -20,7 +20,6 @@
 @implementation JProfileViewController
 
 @synthesize mPageType;
-@synthesize pmCC;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -58,11 +57,47 @@
     recognizer.delegate=self;
     [self.view addGestureRecognizer:recognizer];
 
-    
-    pmCC = [[PMCalendarController alloc]init];
     [mBtnShowSideLeftView setHidden:YES];
     [mBtnShowSideRightView setHidden:YES];
+    
+    datePicker = [[UIDatePicker alloc]init];
+    datePicker.datePickerMode = UIDatePickerModeDate;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *currentDate = [NSDate date];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setYear:-16];
+    NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+    [comps setYear:-100];
+    NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+
+    [datePicker setMaximumDate:maxDate];
+    [datePicker setMinimumDate:minDate];
+    
+    [mTxtEditBirthday setInputView:datePicker];
+    
+    UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [toolBar setTintColor:[UIColor grayColor]];
+    UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(ShowSelectedDate)];
+    UIBarButtonItem *cancelBtn = [[UIBarButtonItem alloc]initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(CancelDateSelection)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [toolBar setItems:[NSArray arrayWithObjects:cancelBtn, spacer, doneBtn, nil]];
+    [mTxtEditBirthday setInputAccessoryView:toolBar];
+    
+    
     [self initMedia];
+}
+
+-(void)CancelDateSelection {
+    [mTxtEditBirthday resignFirstResponder];
+}
+
+-(void)ShowSelectedDate {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"dd/MM/yyyy"];
+    mTxtEditBirthday.text = [NSString stringWithFormat:@"%@", [formatter stringFromDate:datePicker.date]];
+    [mTxtEditBirthday resignFirstResponder];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -117,7 +152,6 @@
 }
 -(void)onTapBackground:(id)sender
 {
-    [pmCC dismissCalendarAnimated:YES];
     if([mTxtEditBirthday isFirstResponder])
         return;
     [mTxtAbout endEditing:YES];
@@ -158,6 +192,7 @@
     }
     
 }
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     int mNewPage=scrollView.contentOffset.x/scrollView.frame.size.width;
@@ -514,56 +549,8 @@
 }
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if(textField == mTxtEditBirthday)
-    {
-        if ([self.pmCC isCalendarVisible])
-        {
-            [self.pmCC dismissCalendarAnimated:NO];
-        }
-        BOOL isPopover = YES;
-        
-        // limit apple calendar to 2 months before and 2 months after current date
-        PMPeriod *allowed = [PMPeriod periodWithStartDate:[[NSDate date] dateByAddingMonths:-2]
-                                                  endDate:[[NSDate date] dateByAddingMonths:2]];
-        pmCC.allowedPeriod = allowed;
-       
-        
-        self.pmCC = [[PMCalendarController alloc] initWithThemeName:@"default"];
-        self.pmCC.delegate = self;
-        self.pmCC.mondayFirstDayOfWeek = NO;
-      
-
-        
-//        [self.pmCC presentCalendarFromView:textField
-//                  permittedArrowDirections:PMCalendarArrowDirectionAny
-//                                 isPopover:isPopover
-//                                  animated:YES];
-//
-//        CGRect *pDisplayFrame = CGRectMake(0, textField.frame.origin.y, textField.frame.size.width, textField.frame.size.height);
-        
-        CGRect tFrame = mTxtAbout.frame;
-        tFrame.origin.y = self.view.frame.size.height / 2 - 50;
-        
-        [self.pmCC presentCalendarFromRect:tFrame inView:self.view permittedArrowDirections:PMCalendarArrowDirectionUp animated:YES];
-        
-
-//        [pmCC.view bringSubviewToFront:mBgGrayView];
-//
-//        [mViewProfileEditContainer sendSubviewToBack:self.view];
-        
-        
-        self.pmCC.period = [PMPeriod oneDayPeriodWithDate:[NSDate date]];
-        [self calendarController:pmCC didChangePeriod:pmCC.period];
-        [self.pmCC setModalInPopover:YES];
-        return NO;
-    }
     return YES;
 }
-- (void)calendarController:(PMCalendarController *)calendarController didChangePeriod:(PMPeriod *)newPeriod
-{
-    mTxtEditBirthday.text =[newPeriod.startDate dateStringWithFormat:@"yyyy-MM-dd"];
-}
-
 
 #pragma mark small profile photo setting
 -(void)onTouchBtnSmallPhoto:(id)sender
@@ -715,8 +702,6 @@
 -(IBAction)onTouchBtnNext:(id)sender
 {
     [self onTouchBtnSaveProfile:nil];
-   
-    
 }
 
 
@@ -729,9 +714,7 @@
     if(![mTxtEditBirthday.text isKindOfClass:[NSNull class]])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        
-        //  _age = 0;
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
         
         if(![mTxtEditBirthday.text isEqualToString:@""])
         {
