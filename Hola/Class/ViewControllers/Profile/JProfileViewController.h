@@ -16,22 +16,12 @@
     IBOutlet UIScrollView *mScrollPhotoView;
     IBOutlet UIPageControl *mPageControl;
     
-    IBOutlet UIImageView *mProfileImageView;
     IBOutlet UIButton *mBtnProfileEdit;
     IBOutlet UIButton *mBtnAddMainPhoto;
     IBOutlet UIView *mViewProfileContainer;
     IBOutlet UIActivityIndicatorView *mIndicatorProfileMainPhoto;
     
-    // normal profile view
-    IBOutlet UILabel *mLblEmail;
-    IBOutlet UILabel *mLblBirthday;
-    IBOutlet UILabel *mLblGender;
-    IBOutlet UILabel *mLblCity;
-    IBOutlet UILabel *mLblDescription;
     IBOutlet UILabel *mLblUserName;
-    IBOutlet UILabel *mLblProfilePhotoCount;
-    
-    // Edit view
     IBOutlet UIImageView *mImgProfilePhotoEdit;
     
     

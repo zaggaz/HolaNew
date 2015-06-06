@@ -33,26 +33,17 @@
     } ) ;
     return sharedController ;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     mPageType = @"introduction";
-    [mProfileImageView.layer setCornerRadius:mProfileImageView.frame.size.height / 2];
-    [mProfileImageView.layer setMasksToBounds:YES];
-    [mProfileImageView.layer setBorderColor:[UIColor colorWithRed:251/255.0f green:107/255.0f blue:97/255.0f alpha:1].CGColor];
 
     [mImgProfilePhotoEdit.layer setCornerRadius:mImgProfilePhotoEdit.frame.size.height / 2];
     [mImgProfilePhotoEdit.layer setMasksToBounds:YES];
     [mImgProfilePhotoEdit.layer setBorderColor:[UIColor colorWithRed:251/255.0f green:107/255.0f blue:97/255.0f alpha:1].CGColor];
-
-    
-    //[mProfileImageView setImage:[UIImage imageNamed:@"sample_1.jpg"]];
-    
     
     [mBtnProfileEdit.layer setCornerRadius:3.0f];
     [mBtnProfileEdit.layer setMasksToBounds:YES];
-    //[mBtnProfileEdit setBackgroundColor:[UIColor colorWithRed:232/255.0 green:232/255.0 blue:232/255.0 alpha:1]];
-    [mBtnProfileEdit setBackgroundColor:[UIColor colorWithRed:251/255.0f green:107/255.0f blue:97/255.0f alpha:1]];
-
     [mScrollProfileEdit setHidden:NO];
     
     [mBtnProfileEditDone.layer setCornerRadius:3.0f];
@@ -73,6 +64,7 @@
     [mBtnShowSideRightView setHidden:YES];
     [self initMedia];
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
 
@@ -91,7 +83,6 @@
     }
     if(![Engine isBackAction])
     {
-        [self initProfile];
         [self initProfileEditView];
     }
     else
@@ -111,22 +102,6 @@
     }
 
 }
--(void)initProfile
-{
-    JUserInfo *pCurrentUser = [Engine gPersonInfo];
-    mLblEmail.text = pCurrentUser.mEmail;
-    mLblGender.text = [pCurrentUser.mGender isEqualToString:@"0"]?@"Male":@"Female";
-    mLblBirthday.text = [NSString stringWithFormat:@"%@", pCurrentUser.mBirthday];
-    mLblCity.text = pCurrentUser.mLocation;
-    mLblDescription.text = pCurrentUser.mDescription;
-    [mProfileImageView setImageWithURL:[NSURL URLWithString:pCurrentUser.mPhotoUrl] placeholderImage:[UIImage  imageNamed:@"user_placeholder.png"]];
-    
-    mLblUserName.text = pCurrentUser.mUserName;
-    mIndicatorProfileMainPhoto.hidden=YES;
-    mLblProfilePhotoCount.text = [NSString stringWithFormat:@"%d", (int)[pCurrentUser.mArrPic count]];
-    
-    
-}
 -(void)initProfileEditView
 {
     JUserInfo *pUser = [Engine gPersonInfo];
@@ -137,8 +112,7 @@
     mTxtAbout.text = pUser.mDescription;
     [mImgProfilePhotoEdit setImageWithURL:[NSURL URLWithString:pUser.mPhotoUrl] placeholderImage:[UIImage  imageNamed:@"user_placeholder.png"]];
     [[mViewEditUserOtherPhotoContainer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [mViewEditUserOtherPhotoContainer setFrame:CGRectMake(0,0,30+60* 6, 60)];
-    [mScrollEditUserOtherPhotos setContentSize:CGSizeMake(30+6*60, 60)];
+    mIndicatorProfileMainPhoto.hidesWhenStopped = YES;
     [self initSubPhotos];
 }
 -(void)onTapBackground:(id)sender
@@ -156,16 +130,16 @@
 -(void)initMedia
 {
 //    UIViewContentModeScaleAspectFill
-    [mProfileImageView setContentMode:UIViewContentModeScaleAspectFill];
     [mBgGrayView setFrame:CGRectMake(0, 0,320,SCREEN_HEIGHT)];
     [mBgGrayView setHidden:YES];
     [mDeletePhotoConfirmView setFrame:CGRectMake(20, (SCREEN_HEIGHT-mDeletePhotoConfirmView.frame.size.height)/2.0,280, mDeletePhotoConfirmView.frame.size.height)];
     [mDeletePhotoConfirmView setHidden:YES];
     
+    [self.view addSubview:mScrollProfileEdit];
     [self.view addSubview:mBgGrayView];
     [self.view addSubview:mDeletePhotoConfirmView];
 //    [self.view insertSubview:mScrollProfileEdit belowSubview:mViewProfileContainer];
-    [self.view addSubview:mScrollProfileEdit];
+
     [mScrollProfileEdit setFrame:CGRectMake(0, SCREEN_HEIGHT - mScrollProfileEdit.frame.size.height, mScrollProfileEdit.frame.size.width, mScrollProfileEdit.frame.size.height)];
     
 }
@@ -197,8 +171,6 @@
     
     NSLog(@"scrollViewDidEndDecelerating: %f",scrollView.contentOffset.x);
 }
-
-
 
 -(IBAction)onTapUserMainPhoto :(id)sender
 {
@@ -271,7 +243,6 @@
             
             if(photoType == PHOTO_TYPE_MAIN)
             {
-                mProfileImageView.image= [_info valueForKey: UIImagePickerControllerEditedImage];
                 mImgProfilePhotoEdit.image = [_info valueForKey: UIImagePickerControllerEditedImage];
                 
                 [_picker dismissViewControllerAnimated : YES completion : ^{
@@ -291,7 +262,6 @@
 }
 -(void)uploadProfileMainPhoto
 {
-    mIndicatorProfileMainPhoto.hidden=NO;
     [mIndicatorProfileMainPhoto startAnimating];
     mBtnAddMainPhoto.enabled=NO;
 
@@ -335,7 +305,6 @@
                     {
                         [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
                         [mIndicatorProfileMainPhoto stopAnimating];
-                        [mIndicatorProfileMainPhoto setHidden:YES];
                     }
                     else
                     {
@@ -344,7 +313,6 @@
                         
                     }
                     [mIndicatorProfileMainPhoto stopAnimating];
-                    [mIndicatorProfileMainPhoto setHidden:YES];
                     mBtnAddMainPhoto.enabled=YES;
                 }
                 else
@@ -355,7 +323,6 @@
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 mBtnAddMainPhoto.enabled=YES;
                 [mIndicatorProfileMainPhoto stopAnimating];
-                [mIndicatorProfileMainPhoto setHidden:YES];
                 [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
             }];
             
@@ -419,7 +386,6 @@
                             [mBtnAddMorePhoto setHidden:YES];
                         }
                         [self initSubPhotos];
-                        mLblProfilePhotoCount.text = [NSString stringWithFormat:@"%d", (int)[[Engine gPersonInfo].mArrPic count]];
                         mBtnAddMorePhoto.enabled=YES;
 
                     }
@@ -523,9 +489,7 @@
     {
         photo=[photos objectAtIndex:i];
         UIButton *thumbItem = [[UIButton alloc] initWithFrame:CGRectMake(60*i+15, 5, 48, 48)];
-        [thumbItem.layer setCornerRadius:3];
         thumbItem.layer.masksToBounds=YES;
-        thumbItem.backgroundColor=[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1];
         
         UIImageView *pImage=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 48, 48)];
         [pImage setContentMode:UIViewContentModeScaleAspectFill];
@@ -533,7 +497,6 @@
         [thumbItem addSubview:pImage];
         [thumbItem setTag: OTHER_MEDIA_TAG_START+i];
         [thumbItem.layer setCornerRadius:thumbItem.frame.size.width / 2];
-        [thumbItem.layer setMasksToBounds:YES];
         
         //[thumbItem addTarget:self action:@selector(onTouchBtnPhoto:) forControlEvents:UIControlEventTouchUpInside];
         UIButton *pBtnRemoveThumb = [[UIButton alloc]initWithFrame:CGRectMake(60*i+10 + 38, 5, 15, 15)];
@@ -697,7 +660,6 @@
                             //[self initView];
                             [self initProfileEditView];
                             [self  initSubPhotos];
-                            mLblProfilePhotoCount.text = [NSString stringWithFormat:@"%d", (int)[[Engine gPersonInfo].mArrPic count]];
                         }
                         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                         
@@ -830,7 +792,6 @@
                 [SVProgressHUD dismiss];
                 [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
                 [self onTapBackground:nil];
-                [self initProfile];
                  [[NSNotificationCenter defaultCenter]postNotificationName:SHOW_MAIN_VIEW object:nil];
              //   [self hideEditView];
               //  mBtnProfileEdit.enabled=YES;
