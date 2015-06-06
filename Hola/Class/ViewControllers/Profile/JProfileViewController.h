@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PMCalendar.h"
 
-@interface JProfileViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate, PMCalendarControllerDelegate>
+@interface JProfileViewController : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
 {
     IBOutlet UIView* mBgGrayView;
     

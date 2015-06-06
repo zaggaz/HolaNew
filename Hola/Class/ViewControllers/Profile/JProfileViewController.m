@@ -168,13 +168,14 @@
     [mBgGrayView setHidden:YES];
     [mDeletePhotoConfirmView setFrame:CGRectMake(20, (SCREEN_HEIGHT-mDeletePhotoConfirmView.frame.size.height)/2.0,280, mDeletePhotoConfirmView.frame.size.height)];
     [mDeletePhotoConfirmView setHidden:YES];
+        [mScrollProfileEdit setFrame:CGRectMake(0, SCREEN_HEIGHT - mScrollProfileEdit.frame.size.height, mScrollProfileEdit.frame.size.width, mScrollProfileEdit.frame.size.height)];
     
     [self.view addSubview:mScrollProfileEdit];
     [self.view addSubview:mBgGrayView];
     [self.view addSubview:mDeletePhotoConfirmView];
 //    [self.view insertSubview:mScrollProfileEdit belowSubview:mViewProfileContainer];
 
-    [mScrollProfileEdit setFrame:CGRectMake(0, SCREEN_HEIGHT - mScrollProfileEdit.frame.size.height, mScrollProfileEdit.frame.size.width, mScrollProfileEdit.frame.size.height)];
+
     
 }
 -(void)viewWillDisappear:(BOOL)animated

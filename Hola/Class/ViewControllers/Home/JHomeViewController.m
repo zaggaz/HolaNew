@@ -22,11 +22,26 @@
 @synthesize backCardView;
 @synthesize mArrUsers;
 
++ ( JHomeViewController* ) sharedController
+{
+    __strong static JHomeViewController* sharedController = nil ;
+    static dispatch_once_t onceToken;
+    dispatch_once( &onceToken, ^{
+        sharedController = [ [ JHomeViewController alloc ] initWithNibName : @"JHomeViewController" bundle : nil ] ;
+    } ) ;
+    return sharedController;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
      mArrUsers = [[NSMutableArray alloc]init];
-    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(redisplayUserFeed:) name: NOTIFICATION_SETTING_CHANGED object: nil];
+
+    [NSTimer scheduledTimerWithTimeInterval:10.0
+                                     target:self
+                                   selector:@selector(redisplayUserFeed:)
+                                   userInfo:nil
+                                    repeats:YES];
+//    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(redisplayUserFeed:) name: NOTIFICATION_SETTING_CHANGED object: nil];
     recognizer=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTouchBtnDetail:)];
     recognizer.numberOfTouchesRequired=1;
     recognizer.delegate=self;
@@ -63,26 +78,18 @@
     [mImgUserPhoto.layer setCornerRadius:mImgUserPhoto.frame.size.height / 2];
     [mImgUserPhoto.layer setMasksToBounds:YES];
     
-        [self startAnimation:nil];
+    [self startAnimation:nil];
     
 }
-+ ( JHomeViewController* ) sharedController
-{
-    __strong static JHomeViewController* sharedController = nil ;
-    static dispatch_once_t onceToken;
-    dispatch_once( &onceToken, ^{
-        sharedController = [ [ JHomeViewController alloc ] initWithNibName : @"JHomeViewController" bundle : nil ] ;
-    } ) ;
-    return sharedController;
-}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     //[super viewWillAppear:YES];
 
     if([Engine bUserSettingChanged] == YES)
     {
-        [mViewSearchContainer setHidden:NO];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [self showSearchRadarTo:1.0f];
+//        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [mArrUsers removeAllObjects];
         [self.frontCardView removeFromSuperview];
         [self.backCardView removeFromSuperview];
@@ -97,18 +104,19 @@
 -(void)redisplayUserFeed:(id)sender
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-  //  [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    //if([Engine bUserSettingChanged] == YES)
-    {
-        [mViewSearchContainer setHidden:NO];
-        [mArrUsers removeAllObjects];
+    if (mArrUsers.count == 0) {
+        [self showSearchRadarTo:1.0f];
         [Engine setBUserSettingChanged:NO];
         [self.frontCardView removeFromSuperview];
         [self.backCardView removeFromSuperview];
         [self getMatchedUsers];
     }
- 
-    
+}
+
+-(void) showSearchRadarTo:(float)alpha{
+    [UIView animateWithDuration:0.3 animations:^() {
+        mViewSearchContainer.alpha = alpha;
+    }];
 }
 -(void) getMatchedUsers
 {
@@ -139,7 +147,7 @@
             else
             {
                 [SVProgressHUD dismiss];
-                if([[data objectForKey:@"error"] isEqualToString:@"0"])
+                if([error1 isEqualToString:@"0"])
                 {
                     NSArray *pUserArr = [data objectForKey:@"result"];
                     for(NSDictionary *pCurDict in pUserArr)
@@ -149,13 +157,12 @@
                     }
                     if([mArrUsers count] > 0)
                     {
-                        [mViewSearchContainer setHidden:YES];
+                        [self showSearchRadarTo:0.0f];
                         [self showUsers];
                     }
                     else
                     {
-                         //bShowWave = NO;
-                        [mViewSearchContainer setHidden:NO];
+                        [self showSearchRadarTo:1.0f];
                     }
                 }
                 else
@@ -221,21 +228,21 @@
     }
 
     [Engine setIsBackAction:NO];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
     [self setUserLikeStatus:status personid:self.frontCardView.person.userid];
     
     self.frontCardView = self.backCardView;
     if(!self.backCardView)
     {
-        [mViewSearchContainer setHidden:YES];
+        [self showSearchRadarTo:1.0f];
     }
     [frontCardView addGestureRecognizer:recognizer];
     
     [self.frontCardView.layer setBorderWidth:0.0f];
 
-    if([mArrUsers count] == 0)
-        [mViewSearchContainer setHidden:NO];
+//    if([mArrUsers count] == 0)
+//        [mViewSearchContainer setHidden:NO];
     
     if ((self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]])) {
         // Fade the back card into view.
