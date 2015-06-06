@@ -598,10 +598,6 @@
                         <action selector="onTapUserMainPhoto:" destination="-1" eventType="touchUpInside" id="Gga-DF-W41"/>
                     </connections>
                 </button>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="CBI-t2-eGT">
-                    <rect key="frame" x="33" y="33" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </activityIndicatorView>
                 <view contentMode="scaleToFill" id="vmM-lE-E1O">
                     <rect key="frame" x="107" y="8" width="205" height="100"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -644,10 +640,14 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="CBI-t2-eGT">
+                    <rect key="frame" x="48" y="48" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="703" y="23"/>
+            <point key="canvasLocation" x="783" y="-35"/>
         </scrollView>
         <view contentMode="scaleToFill" id="qeN-fV-HSS">
             <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
