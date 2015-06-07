@@ -206,7 +206,6 @@
 		52713D161AC87C9C001FB628 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 52713D151AC87C9C001FB628 /* AppDelegate.m */; };
 		52713D191AC87C9C001FB628 /* Hola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52713D171AC87C9C001FB628 /* Hola.xcdatamodeld */; };
 		52713D1C1AC87C9C001FB628 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52713D1B1AC87C9C001FB628 /* ViewController.m */; };
-		52713D211AC87C9C001FB628 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52713D201AC87C9C001FB628 /* Images.xcassets */; };
 		52713E5F1AC883DF001FB628 /* AppEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 52713E031AC883DF001FB628 /* AppEngine.m */; };
 		52713E601AC883DF001FB628 /* JUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52713E061AC883DF001FB628 /* JUserInfo.m */; };
 		52713E611AC883DF001FB628 /* Responder+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52713E081AC883DF001FB628 /* Responder+UIView.m */; };
@@ -456,6 +455,8 @@
 		52E750EB1AFFD227000E1D4A /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52E750EA1AFFD227000E1D4A /* FacebookSDK.framework */; };
 		52E750EE1AFFD7DC000E1D4A /* JPictureInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 52E750ED1AFFD7DC000E1D4A /* JPictureInfo.m */; };
 		D633A6ED1B18ADF300FC7D6A /* Mission-Script.otf in Resources */ = {isa = PBXBuildFile; fileRef = D633A6EC1B18ADF300FC7D6A /* Mission-Script.otf */; };
+		D68FAA9B1B244A3C00DD6C7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D68FAA9A1B244A3B00DD6C7F /* Images.xcassets */; };
+		D68FAA9F1B24A62200DD6C7F /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = D68FAA9E1B24A62200DD6C7F /* UserService.m */; };
 		D6B612461B1B461D00B9539D /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612431B1B461D00B9539D /* Lato-Bold.ttf */; };
 		D6B612471B1B461D00B9539D /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612441B1B461D00B9539D /* Lato-Light.ttf */; };
 		D6B612481B1B461D00B9539D /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612451B1B461D00B9539D /* Lato-Regular.ttf */; };
@@ -704,7 +705,6 @@
 		52713D1A1AC87C9C001FB628 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		52713D1B1AC87C9C001FB628 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		52713D1E1AC87C9C001FB628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		52713D201AC87C9C001FB628 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		52713D231AC87C9C001FB628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		52713D2E1AC87C9D001FB628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52713D2F1AC87C9D001FB628 /* HolaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HolaTests.m; sourceTree = "<group>"; };
@@ -1074,6 +1074,8 @@
 		52E750EC1AFFD7DC000E1D4A /* JPictureInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPictureInfo.h; sourceTree = "<group>"; };
 		52E750ED1AFFD7DC000E1D4A /* JPictureInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPictureInfo.m; sourceTree = "<group>"; };
 		D633A6EC1B18ADF300FC7D6A /* Mission-Script.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mission-Script.otf"; sourceTree = "<group>"; };
+		D68FAA9A1B244A3B00DD6C7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D68FAA9E1B24A62200DD6C7F /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserService.m; sourceTree = "<group>"; };
 		D6B612431B1B461D00B9539D /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		D6B612441B1B461D00B9539D /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		D6B612451B1B461D00B9539D /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
@@ -1677,7 +1679,7 @@
 				52713D1A1AC87C9C001FB628 /* ViewController.h */,
 				52713D1B1AC87C9C001FB628 /* ViewController.m */,
 				52713D1D1AC87C9C001FB628 /* Main.storyboard */,
-				52713D201AC87C9C001FB628 /* Images.xcassets */,
+				D68FAA9A1B244A3B00DD6C7F /* Images.xcassets */,
 				52713D221AC87C9C001FB628 /* LaunchScreen.xib */,
 				52713D171AC87C9C001FB628 /* Hola.xcdatamodeld */,
 				52713D101AC87C9C001FB628 /* Supporting Files */,
@@ -1715,6 +1717,7 @@
 		52713D3A1AC8825B001FB628 /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				D68FAA9D1B24A60800DD6C7F /* Service */,
 				52713D3E1AC883DF001FB628 /* Library */,
 				5257DD751AC8EF3500FF597B /* ViewControllers */,
 				52713E011AC883DF001FB628 /* Model */,
@@ -2457,6 +2460,14 @@
 			name = fonts;
 			sourceTree = "<group>";
 		};
+		D68FAA9D1B24A60800DD6C7F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D68FAA9E1B24A62200DD6C7F /* UserService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2488,6 +2499,7 @@
 				TargetAttributes = {
 					52713D0C1AC87C9C001FB628 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 849U4RXAUG;
 					};
 				};
 			};
@@ -2686,6 +2698,7 @@
 				522AD4521AFFA72B0044DA85 /* btn-scan-white@2x.png in Resources */,
 				522AD46A1AFFA72B0044DA85 /* icon-sidemenu-chat@2x.png in Resources */,
 				527141801AC886D7001FB628 /* check_mark@2x.png in Resources */,
+				D68FAA9B1B244A3C00DD6C7F /* Images.xcassets in Resources */,
 				527141A11AC886D7001FB628 /* SVProgressHUD.bundle in Resources */,
 				527D73051B0253CD00729025 /* btnIconSetting_White.png in Resources */,
 				522AD4541AFFA72B0044DA85 /* btnIconMenuDone.png in Resources */,
@@ -2709,7 +2722,6 @@
 				527D72F01B0253CD00729025 /* btnIconCamera_Light_1@2x.png in Resources */,
 				527D73221B0253CD00729025 /* iconKey.png in Resources */,
 				526AC18D1AD280D8001865E9 /* JUserSettingViewController.xib in Resources */,
-				52713D211AC87C9C001FB628 /* Images.xcassets in Resources */,
 				D633A6ED1B18ADF300FC7D6A /* Mission-Script.otf in Resources */,
 				52D428D91ACC3F1A00A94A5F /* JHomeLeftViewController.xib in Resources */,
 				522AD44C1AFFA72B0044DA85 /* btn-cancel@2x.png in Resources */,
@@ -2907,6 +2919,7 @@
 				5271417E1AC886D7001FB628 /* DropDownListView.m in Sources */,
 				527D725F1B02538F00729025 /* JChatListCell.m in Sources */,
 				5275C2EC1B0149B7009294D3 /* PMCalendarBackgroundView.m in Sources */,
+				D68FAA9F1B24A62200DD6C7F /* UserService.m in Sources */,
 				527141561AC886D7001FB628 /* AFNetworkReachabilityManager.m in Sources */,
 				527141881AC886D7001FB628 /* NSURL+Base.m in Sources */,
 				527D73371B0255BD00729025 /* SWLongPressGestureRecognizer.m in Sources */,
@@ -3033,8 +3046,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hao Zhao (849U4RXAUG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hao Zhao (849U4RXAUG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Hola/Framework/ShareSDK/Connection",
@@ -3059,7 +3072,7 @@
 					"$(PROJECT_DIR)/Hola/Framework/ShareSDK/Extend/YiXinSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f0ede21a-f2ca-49c4-8481-fa61504902d6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3068,8 +3081,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hao Zhao (849U4RXAUG)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hao Zhao (849U4RXAUG)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Hola/Framework/ShareSDK/Connection",
@@ -3094,7 +3107,7 @@
 					"$(PROJECT_DIR)/Hola/Framework/ShareSDK/Extend/YiXinSDK",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f0ede21a-f2ca-49c4-8481-fa61504902d6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

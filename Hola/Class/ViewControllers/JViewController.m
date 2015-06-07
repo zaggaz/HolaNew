@@ -28,12 +28,12 @@
 
 @implementation JViewController
 @synthesize locationManager;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     mJASidePanel = [[JASidePanelController alloc] init];
     mJASidePanel.shouldDelegateAutorotateToVisiblePanel = NO;
     mJASidePanel.navigationController.navigationBarHidden = TRUE;
-
     JHomeLeftViewController *homeLeftView = [JHomeLeftViewController sharedController];
     mJASidePanel.leftPanel = homeLeftView;
     
@@ -41,8 +41,7 @@
     mJASidePanel.rightPanel = homeRightView;
 
     JHomeViewController *homeView = [JHomeViewController sharedController];
-    mJASidePanel.centerPanel = homeView; // or navigationView?
-    
+    mJASidePanel.centerPanel = homeView;
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(onActionShowHome:) name: SHOW_MAIN_VIEW object: nil];
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(onActionShowMainHome:) name: SHOW_MAIN_HOME object: nil];

@@ -175,9 +175,6 @@
     if(![[dict objectForKey:@"birthday"] isKindOfClass:[NSNull class]])
         birthday = [dict objectForKey:@"birthday"];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
   //  _age = 0;
     if([dict objectForKey:@"settime"]  && ![[dict objectForKey:@"settime"] isKindOfClass:[NSNull class]])
     {
@@ -192,6 +189,8 @@
     
     if(![birthday isEqualToString:@""])
     {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd/MM/yyyy"];
         NSDate *date = [dateFormatter dateFromString:birthday];
         if(date)
             age = [AppEngine ageFromBirthday:date];

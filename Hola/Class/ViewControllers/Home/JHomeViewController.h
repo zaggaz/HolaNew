@@ -17,7 +17,6 @@
     
     CALayer *waveLayer;
 
-    
     IBOutlet UIView *mViewSearchContainer;
     IBOutlet UIImageView *mImgUserPhoto;
 }

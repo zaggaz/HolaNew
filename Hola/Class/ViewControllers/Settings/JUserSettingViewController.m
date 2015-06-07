@@ -187,11 +187,11 @@
     
     
     mLblAgeRangeValue.text = [NSString stringWithFormat:@"%d ~ %d", (int)mSliderAgeRange.lowerValue, (int)mSliderAgeRange.upperValue];
-    mLblDistanceValue.text = [NSString stringWithFormat:@"%d(km)", (int)mSliderDistance.value];
+    mLblDistanceValue.text = [NSString stringWithFormat:@"%dkm", (int)mSliderDistance.value];
 }
 -(IBAction)onSlideValueChange:(id)sender
 {
-    mLblDistanceValue.text = [NSString stringWithFormat:@"%d(km)", (int)mSliderDistance.value];
+    mLblDistanceValue.text = [NSString stringWithFormat:@"%dkm", (int)mSliderDistance.value];
     
 }
 //push notification and visibility
@@ -199,6 +199,7 @@
 {
     SevenSwitch *pCurSwitch = (SevenSwitch *)sender;
 }
+
 //distance change
 - (void)slideRangeValueChanged:(id)control
 {
