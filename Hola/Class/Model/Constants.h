@@ -84,6 +84,8 @@
 
 
 #define MSG_SERVICE_UNAVAILABLE @"Sorry! Service is not available now."
+#define MSG_INVALID_TOKEN @"Your login has expired, please login again."
+
 #define MSG_LOADING             @"Loading..."
 #define MSG_WAITING             @"Waiting..."
 #define MSG_SAVING              @"Saving..."

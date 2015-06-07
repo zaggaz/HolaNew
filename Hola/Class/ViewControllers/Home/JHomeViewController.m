@@ -10,11 +10,15 @@
 #import "JHomeDetailViewController.h"
 #import "Person.h"
 #import "JMatchViewController.h"
+#import "DataService.h"
+
 @interface JHomeViewController ()
 
 @end
 
-@implementation JHomeViewController
+@implementation JHomeViewController {
+    NSTimer *timer;
+}
 
 @synthesize people;
 @synthesize currentPerson;
@@ -32,16 +36,23 @@
     return sharedController;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    if(timer)
+    {
+        [timer invalidate];
+        timer = nil;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
      mArrUsers = [[NSMutableArray alloc]init];
 
-    [NSTimer scheduledTimerWithTimeInterval:8.8
+    timer = [NSTimer scheduledTimerWithTimeInterval:5
                                      target:self
                                    selector:@selector(redisplayUserFeed:)
                                    userInfo:nil
                                     repeats:YES];
-//    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(redisplayUserFeed:) name: NOTIFICATION_SETTING_CHANGED object: nil];
     recognizer=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTouchBtnDetail:)];
     recognizer.numberOfTouchesRequired=1;
     recognizer.delegate=self;
@@ -56,15 +67,15 @@
     int screenWidth = [self.view bounds].size.width;
     int containerHeight = mViewSearchContainer.frame.size.height;
     
-    int xPos = screenWidth / 2 - 30;
-    int yPos = containerHeight / 2 - 70;
+    int xPos = screenWidth / 2 - 4;
+    int yPos = containerHeight / 2 - 45;
 
 
     
     if (IS_IPHONE5) {
-        waveLayer.frame = CGRectMake(screenWidth / 2 - 4, yPos + 30 - 5, 8, 8);
+        waveLayer.frame = CGRectMake(xPos, yPos, 8, 8);
     }else{
-        waveLayer.frame = CGRectMake(screenWidth / 2 - 4, yPos + 30 - 5 , 8, 8);
+        waveLayer.frame = CGRectMake(xPos, yPos, 8, 8);
     }
     
     
@@ -91,6 +102,8 @@
         [self setRadarViewAlphaTo:1.0f];
 //        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [mArrUsers removeAllObjects];
+        self.frontCardView = nil;
+        self.backCardView = nil;
         [self.frontCardView removeFromSuperview];
         [self.backCardView removeFromSuperview];
         [Engine setBUserSettingChanged:NO];
@@ -127,62 +140,23 @@
     [parameters setObject:@"dating" forKey:@"type"];
     [parameters setObject:@"get_matched_users" forKey:@"cmd"];
     
-    AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Error Data %@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
-        
-        NSString *res = [dict objectForKey: @"success"];
-        if ([res isEqualToString: @"1"])
+    DataService *dataService = [DataService sharedDataService];
+    [dataService postWithParameters:parameters successHandler:^(NSArray *pUserArr) {
+        for(NSDictionary *pCurDict in pUserArr)
         {
-            NSDictionary *data = [dict objectForKey: @"data"];
-            NSString *error1 = [data objectForKey: @"error"];
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            if([error1 isEqualToString:@"1"])
-            {
-                [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-            }
-            else
-            {
-                [SVProgressHUD dismiss];
-                if([error1 isEqualToString:@"0"])
-                {
-                    NSArray *pUserArr = [data objectForKey:@"result"];
-                    for(NSDictionary *pCurDict in pUserArr)
-                    {
-                        Person *pCurPerson = [[Person alloc]initWithDictionary:pCurDict];
-                        [mArrUsers addObject:pCurPerson];
-                    }
-                    if([mArrUsers count] > 0)
-                    {
-                        [self setRadarViewAlphaTo:0.0f];
-                        [self showUsers];
-                    }
-                    else
-                    {
-                        [self setRadarViewAlphaTo:1.0f];
-                    }
-                }
-                else
-                {
-                    [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-                    
-                }
-            }
+            Person *pCurPerson = [[Person alloc]initWithDictionary:pCurDict];
+            [mArrUsers addObject:pCurPerson];
+        }
+        if([mArrUsers count] > 0)
+        {
+            [self setRadarViewAlphaTo:0.0f];
+            [self showUsers];
         }
         else
         {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-            
+            [self setRadarViewAlphaTo:1.0f];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-        
-    }];
+    } currentView:self.view];
 }
 
 
@@ -255,6 +229,8 @@
                          animations:^{
                              self.backCardView.alpha = 1.f;
                          } completion:nil];
+    }else {
+        self.backCardView = nil;
     }
  }
 
@@ -414,14 +390,14 @@
     
     
     UIColor *fromColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
-    UIColor *toColor = [UIColor colorWithRed:255 green:120 blue:0 alpha:0.1];
+    UIColor *toColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0];
     CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
     colorAnimation.duration = 4;
     colorAnimation.fromValue = (id)fromColor.CGColor;
     colorAnimation.toValue = (id)toColor.CGColor;
     [aLayer addAnimation:colorAnimation forKey:@"colorAnimationBG"];
     UIColor *fromColor1 = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
-    UIColor *toColor1 = [UIColor colorWithRed:0 green:255 blue:0 alpha:0.1];
+    UIColor *toColor1 = [UIColor colorWithRed:255 green:0 blue:0 alpha:0];
     CABasicAnimation *colorAnimation1 = [CABasicAnimation animationWithKeyPath:@"borderColor"];
     colorAnimation1.duration = 4;
     colorAnimation1.fromValue = (id)fromColor1.CGColor;
@@ -430,10 +406,6 @@
     [aLayer addAnimation:colorAnimation1 forKey:@"colorAnimation"];
     [self performSelector:@selector(waveAnimation:) withObject:waveLayer afterDelay:4];
 
-//    if(bShowWave == YES)
-//        [self performSelector:@selector(getMatchedUsers:) withObject:waveLayer afterDelay:5];
-
-    
 }
 
 

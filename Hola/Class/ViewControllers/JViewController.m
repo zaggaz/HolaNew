@@ -19,6 +19,7 @@
 
 #import "JSearchViewController.h"
 #import "JMessgeHistoryViewController.h"
+#import "DataService.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
@@ -29,8 +30,18 @@
 @implementation JViewController
 @synthesize locationManager;
 
+// TODO: This is unnecessary once all http requests use the dataservice as it handles invalid tokens.
+- (void)checkAccessToken {
+    DataService *dataService = [DataService sharedDataService];
+    NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
+    [parameters setObject:[Engine gPersonInfo].mSessToken forKey:@"sesstoken"];
+    [parameters setObject:@"checkToken" forKey:@"type"];
+    [dataService postWithParameters:parameters successHandler:^(NSObject *result) {
+    } currentView:self.view];
+};
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     mJASidePanel = [[JASidePanelController alloc] init];
     mJASidePanel.shouldDelegateAutorotateToVisiblePanel = NO;
     mJASidePanel.navigationController.navigationBarHidden = TRUE;
@@ -119,7 +130,7 @@
             {
                 [[Engine gPersonInfo] setDataWithDictionary:dict];
                 [[Engine gPersonInfo] setCurrentUserStep:currentLoginStep];
-                
+                [self checkAccessToken];
                 [self onActionShowHome:nil];
             }
         }
@@ -277,8 +288,6 @@
     [session closeAndClearTokenInformation];
     [session close];
     [FBSession setActiveSession:nil];
-    
-    
 }
 #pragma mark login
 -(IBAction)onTouchBtnFB:(id)sender
