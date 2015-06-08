@@ -38,6 +38,7 @@
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"userid"];
 
     [parameters setObject:@"checkToken" forKey:@"type"];
+    [parameters setObject:@"checkToken" forKey:@"cmd"];
     [dataService postWithParameters:parameters successHandler:^(NSObject *result) {
     } currentView:self.view];
 };
