@@ -44,15 +44,16 @@
     }
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    timer = [NSTimer scheduledTimerWithTimeInterval:5
+                                             target:self
+                                           selector:@selector(redisplayUserFeed:)
+                                           userInfo:nil
+                                            repeats:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
      mArrUsers = [[NSMutableArray alloc]init];
-
-    timer = [NSTimer scheduledTimerWithTimeInterval:5
-                                     target:self
-                                   selector:@selector(redisplayUserFeed:)
-                                   userInfo:nil
-                                    repeats:YES];
     recognizer=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTouchBtnDetail:)];
     recognizer.numberOfTouchesRequired=1;
     recognizer.delegate=self;

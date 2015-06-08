@@ -35,6 +35,8 @@
     DataService *dataService = [DataService sharedDataService];
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
     [parameters setObject:[Engine gPersonInfo].mSessToken forKey:@"sesstoken"];
+    [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"userid"];
+
     [parameters setObject:@"checkToken" forKey:@"type"];
     [dataService postWithParameters:parameters successHandler:^(NSObject *result) {
     } currentView:self.view];
