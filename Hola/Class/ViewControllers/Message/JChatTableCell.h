@@ -11,7 +11,7 @@
 
 @interface JChatTableCell : UITableViewCell {
     JMessageInfo *_mCInfo;
-//    IBOutlet UILabel *mLblTime;
+    IBOutlet UILabel *mLblTime;
     IBOutlet UILabel *mLblMessage;
 //    IBOutlet UILabel *mLblSender;
     IBOutlet UIImageView *mImgSharedPhoto;

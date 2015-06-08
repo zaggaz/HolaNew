@@ -64,7 +64,7 @@
     recognizer.delegate=self;
     [mTView addGestureRecognizer:recognizer];
     
-    textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(40, 7, 220, 15)];
+    textView = [[HPGrowingTextView alloc] initWithFrame:CGRectMake(40, 8, 220, 15)];
     textView.isScrollable = NO;
     textView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     textView.internalTextView.contentInset=UIEdgeInsetsMake(0, 0, 0, 0);
