@@ -44,13 +44,18 @@
 //    return [message sizeWithFont:font constrainedToSize:MESSAGEBOUNDARY lineBreakMode:
 //           NSLineBreakByWordWrapping];
     //[UIFont systemFontOfSize:14][UIFont fontWithName:@"Helvetica Neue" size:14]
+
     return [message boundingRectWithSize:MESSAGEBOUNDARY options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:font} context:nil].size;
+
+//    return [message sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(200, CGFLOAT_MAX) lineBreakMode:NSLineBreakByCharWrapping];
+    
 }
 
 -(CGSize)messageSize:(NSString*)message {
     
     return [message sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(200, CGFLOAT_MAX) lineBreakMode:
-            NSLineBreakByWordWrapping];//[UIFont systemFontOfSize:14][UIFont fontWithName:@"Helvetica Neue" size:14]
+            NSLineBreakByCharWrapping];
+    //[UIFont systemFontOfSize:14][UIFont fontWithName:@"Helvetica Neue" size:14]
     //    return [message boundingRectWithSize:CGSizeMake(200, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size;
 }
 
@@ -75,6 +80,7 @@
     {
         if([info.mMsgType isEqualToString:MESSAGE_TYPE_NOTE])
         {
+            info.mMsg = [info.mMsg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             [mImgMessageBg setHidden:NO];
             float offset=10.0;
             float width=0;
@@ -82,12 +88,12 @@
             textSize.width+=5;
             if(textSize.width>205)
                 textSize.width=205;
-            mLblMessage.frame = CGRectMake(15, offset, textSize.width+2,textSize.height+5);
+            mLblMessage.frame = CGRectMake(15, offset, textSize.width+2,textSize.height);
             width=textSize.width;
             offset+=textSize.height;
             [mLblMessage setHidden:NO];
             
-            mMessageView.frame = CGRectMake(282-width-40, 5, width+30,offset+25);
+            mMessageView.frame = CGRectMake(282-width-40, 5, width+30,offset+10);
             [mImgSharedPhoto setHidden:YES];
             [mLblMessage setText:[info mMsg]];
 
@@ -109,12 +115,14 @@
         mImgMessageBg.image = [[UIImage imageNamed:@"bubbleRight2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 20, 18, 25)];
         mPhotoView.frame = CGRectMake(282+30-40, mMessageView.frame.size.height-40+5, 40, 40);
         [mPhotoView setContentMode:UIViewContentModeScaleAspectFill];
-        [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl]];
+        [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
 
     }
     else {
         if([info.mMsgType isEqualToString:MESSAGE_TYPE_NOTE])
         {
+            info.mMsg = [info.mMsg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
             [mImgMessageBg setHidden:NO];
             [mLblMessage setText:[info mMsg]];
             float offset=10.0;
@@ -128,11 +136,9 @@
             width=textSize.width;
             offset+=textSize.height;
             [mLblMessage setHidden:NO];
-            mMessageView.frame = CGRectMake(40+5, 7, width+30,offset+25);
-            
-            [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl]];
-            
-            [mImgMessageBg setFrame:CGRectMake(0, 0, mMessageView.frame.size.width, mMessageView.frame.size.height)];
+            mMessageView.frame = CGRectMake(40+5, 7, width+30,offset+10);
+            [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
+            [mImgMessageBg setFrame:CGRectMake(0, 0, mMessageView.frame.size.width, mMessageView.frame.size.height )];
         }
         else
         {
@@ -145,13 +151,13 @@
             [mImgSharedPhoto.layer setCornerRadius:12];
             mImgSharedPhoto.layer.masksToBounds=YES;
              [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
-            mImgMessageBg.image = [[UIImage imageNamed:@"bubbleLeft2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 20, 18, 25)];
+            mImgMessageBg.image = [[UIImage imageNamed:@"bubbleLeft2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 20, 18, 20)];
             
         }
         mImgMessageBg.image = [[UIImage imageNamed:@"bubbleLeft2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 20)];
         [mPhotoView setContentMode:UIViewContentModeScaleAspectFill];
         mPhotoView.frame = CGRectMake(5.0, mMessageView.frame.size.height-40+5, 40, 40);
-        [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl]];
+        [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
         
     }
 }
