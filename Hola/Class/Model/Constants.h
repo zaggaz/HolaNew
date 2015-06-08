@@ -11,13 +11,10 @@
 
 //#define WEB_SERVICES_URL              @"http://192.168.2.106/hola/webservice/webservice.php"
 //#define WEB_SITE_BASE_URL              @"http://192.168.2.106/hola/"
-
 //#define WEB_SERVICES_URL                @"http://whitesyndicateapps.com/hola/webservice/webservice.php"
 //#define WEB_SITE_BASE_URL               @"http://whitesyndicateapps.com/hola/"
-
 #define WEB_SERVICES_URL                @"http://localhost:8888/Hola/hola_backend2/webservice/webservice.php"
 #define WEB_SITE_BASE_URL               @"http://localhost:8888/Hola/hola_backend2/"
-
 //#define WEB_SERVICES_URL                @"http://service.letshola.com/webservice/webservice.php"
 //#define WEB_SITE_BASE_URL               @"http://service.letshola.com/"
 
@@ -88,9 +85,10 @@
 
 #define MSG_LOADING             @"Loading..."
 #define MSG_WAITING             @"Waiting..."
+#define MSG_WAIT    @"Please wait..."
 #define MSG_SAVING              @"Saving..."
 
-#define MSG_WAIT    @"Please wait..."
+
 
 #define MSG_REGISTER_ALREADY_SIGNED_USER @"The email was already registered!"
 #define MSG_PASSWORD_SHOULD_NOT_EMPTY @"Please enter password."
