@@ -394,7 +394,7 @@
                           JSONObjectWithData:responseData
                           options:kNilOptions
                           error:&error];
-    NSString *photoUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=200&height=200",[json objectForKey:@"id"]];
+    NSString *photoUrl = [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=400&height=400",[json objectForKey:@"id"]];
     
     [Engine setMProfilePhotoUrl:photoUrl];
     [self doProcessFBLogin:json login_type: @"facebook"];

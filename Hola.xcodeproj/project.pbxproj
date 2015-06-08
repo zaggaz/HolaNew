@@ -1090,6 +1090,7 @@
 		D6B612501B1B5D3C00B9539D /* bubbleLeft2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleLeft2@2x.png"; sourceTree = "<group>"; };
 		D6B612511B1B5D3C00B9539D /* bubbleRight2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubbleRight2.png; sourceTree = "<group>"; };
 		D6B612521B1B5D3C00B9539D /* bubbleRight2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubbleRight2@2x.png"; sourceTree = "<group>"; };
+		D6ED3D3B1B26385700AC4C95 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1664,6 +1665,7 @@
 				52713D0F1AC87C9C001FB628 /* Hola */,
 				52713D2C1AC87C9D001FB628 /* HolaTests */,
 				52713D0E1AC87C9C001FB628 /* Products */,
+				D6ED3D3B1B26385700AC4C95 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};

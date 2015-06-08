@@ -133,7 +133,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.98431372549019602" green="0.41960784313725491" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.98431372549019602" green="0.41960784313725491" blue="0.38039215686274508" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="2" sectionFooterHeight="1" id="ukq-T8-Ynh">
                     <rect key="frame" x="0.0" y="85" width="320" height="430"/>
