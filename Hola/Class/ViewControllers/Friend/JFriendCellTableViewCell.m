@@ -33,7 +33,7 @@
     mLblUserName.text = [NSString stringWithFormat:@"%@ • %lu",person.name,(unsigned long)person.age];
     
     NSDate *myDate ;
-    NSString *mPrefix = @"matched on";
+    NSString *mPrefix = @"Matched on";
     if([person.mLastMsgDate integerValue] > 0)
     {
         mPrefix = @"";

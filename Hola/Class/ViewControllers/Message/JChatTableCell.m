@@ -105,6 +105,7 @@
 
         }
     }else {
+        [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
         [mLblMessage setHidden:YES];
         [mImgMessageBg setHidden:YES];
         mImgSharedPhoto.frame=CGRectMake(5,5,90,90);
@@ -113,9 +114,9 @@
         [mImgSharedPhoto.layer setCornerRadius:10];
         [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
         if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId]){
-            mMessageView.frame = CGRectMake(162, 5, 100,100);
+            mMessageView.frame = CGRectMake(242-80, 20, 100,100);
         }else {
-            mMessageView.frame = CGRectMake(52, 5, 100,100);
+            mMessageView.frame = CGRectMake(45, 20, 100,100);
         }
     }
     

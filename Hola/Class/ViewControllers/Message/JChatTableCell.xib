@@ -44,6 +44,10 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="WbE-5d-AZ5" userLabel="Sent Image">
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="yGM-8D-d8E">
@@ -55,6 +59,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="mImgMessageBg" destination="10" id="XkO-8c-Kdq"/>
+                <outlet property="mImgSharedPhoto" destination="WbE-5d-AZ5" id="0VB-VE-OC4"/>
                 <outlet property="mLblMessage" destination="11" id="1Iv-Wf-eSf"/>
                 <outlet property="mLblTime" destination="3a5-f7-DB2" id="mrX-XB-udv"/>
                 <outlet property="mMessageView" destination="w4C-Uc-1d3" id="ZVR-0x-jtm"/>

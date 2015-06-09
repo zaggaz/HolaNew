@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "JMessgeHistoryViewController.h"
 #import "JChatTableCell.h"
+#import "JHomeDetailViewController.h"
 
 #define THUMBNAIL_WIDTH 150.0
 #define THUMBNAIL_HEIGHT 150.0
@@ -107,6 +108,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(IBAction)onTouchBtnProfile:(id)sender
+{
+    JHomeDetailViewController *pHomeDetail = [JHomeDetailViewController sharedController];
+    [pHomeDetail setMCurPerson:chatPartner];
+    
+    [self.navigationController pushViewController:pHomeDetail animated:YES];
+}
 
 -(void)updateTopBadge:(id)sender
 {
@@ -803,7 +811,7 @@
     }
     else
     {
-        NSLog(@"Already there");
+//        NSLog(@"Already there");
     }
     [cell setInfo: [[mArrChatMsg objectAtIndex: indexPath.section] objectAtIndex: indexPath.row]];
     
