@@ -134,7 +134,7 @@
                 NSString *partner;
                 if([[feed objectForKey:@"partner_id"] isEqualToString:[Engine gPersonInfo].mUserId])
                 {
-                    partner=[feed objectForKey:@"user_id"];
+                    partner=[feed objectForKey:@"userid"];
                 }
                 else
                 {

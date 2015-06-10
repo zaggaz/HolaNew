@@ -631,7 +631,7 @@
     [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
         //        [mProgress hide: YES];
         NSData *data=(NSData*)responseObject;
-        NSLog(@"respnose=%@",[NSString stringWithUTF8String:data.bytes]);
+        NSLog(@"response=%@",[NSString stringWithUTF8String:data.bytes]);
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
         //        NSDictionary *dict = (NSDictionary*)responseObject;
         
