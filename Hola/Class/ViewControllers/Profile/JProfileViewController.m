@@ -515,7 +515,7 @@
 {
     //NSMutableArray* photos=[Engine gPersonInfo].mArrPic;
     NSMutableArray* photos=[Engine gPersonInfo].mArrPic;
-    [mLblOtherPhotoEditTitle setText:[NSString stringWithFormat:@"Photos • %d", (int)[photos count]]];
+    [mLblOtherPhotoEditTitle setText:[NSString stringWithFormat:@"Photos • %d", (int)[photos count]+1]];
     [[mViewEditUserOtherPhotoContainer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [mViewEditUserOtherPhotoContainer setFrame:CGRectMake(0,0,30+60*photos.count, 60)];
     [mScrollEditUserOtherPhotos setContentSize:CGSizeMake(30+photos.count*60, 60)];
@@ -722,6 +722,8 @@
             NSDate *date = [dateFormatter dateFromString:mTxtEditBirthday.text];
             if(date)
                 pAge = [NSString stringWithFormat:@"%ldd", (long)[AppEngine ageFromBirthday:date]];
+        }else {
+            pAge = @"0";
         }
     }
     
@@ -750,9 +752,6 @@
     [parameters setObject:mTxtEditBirthday.text forKey:@"birthday"];
     [parameters setObject:mTxtAbout.text forKey:@"description"];
     
-    
-    //NSLog(@"Result----------------:%@",parameters);
-    
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -760,8 +759,7 @@
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
         NSString *res = [dict objectForKey: @"success"];
         NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-         NSLog(@"Error Data %@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-        
+
         if ([res isEqualToString: @"1"])
         {
             NSDictionary *data = [dict objectForKey: @"data"];
