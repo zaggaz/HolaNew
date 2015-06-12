@@ -9,7 +9,7 @@
 #define PLACEHOLDERIMAGE [UIImage imageNamed:@"icon_userplaceholder.png"]
 #define ASL_FONT [UIFont fontWithName:@"Gallaudet" size:48]
 #define MESSAGEFONT_ITALIC [UIFont fontWithName:@"Arial-ItalicMT" size:14]
-#define MESSAGEFONT [UIFont fontWithName:@"Lato-Regular" size:11]
+#define MESSAGEFONT [UIFont fontWithName:@"Lato-Regular" size:14]
 #define MESSAGEBOUNDARY CGSizeMake(0, 0)
 #define ADDITIONAL_HEIGHT 35
 
@@ -53,10 +53,8 @@
 
 -(CGSize)messageSize:(NSString*)message {
     
-    return [message sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(200, CGFLOAT_MAX) lineBreakMode:
+    return [message sizeWithFont:MESSAGEFONT constrainedToSize:CGSizeMake(200, CGFLOAT_MAX) lineBreakMode:
             NSLineBreakByCharWrapping];
-    //[UIFont systemFontOfSize:14][UIFont fontWithName:@"Helvetica Neue" size:14]
-    //    return [message boundingRectWithSize:CGSizeMake(200, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size;
 }
 
 
@@ -81,9 +79,9 @@
         [mImgMessageBg setHidden:NO];
         [mLblMessage setHidden:NO];
         [mImgSharedPhoto setHidden:YES];
-        float yOffset=10;
+        float yOffset=7;
         float xOffset=15;
-        float fontSize = 11;
+        float fontSize = 14;
         CGSize textSize=[self messageSize:info.mMsg font:MESSAGEFONT];
         if(textSize.width>205)
             textSize.width=205;
@@ -96,12 +94,12 @@
           [NSDate dateWithTimeIntervalSince1970:
            [[info mTimeStamp] doubleValue]]]];
         if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId]){
-            mLblTime.frame = CGRectMake(textSize.width - 5, yOffset + textSize.height + 10, 50, 12);
-            mMessageView.frame = CGRectMake(242-textSize.width, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize);
+            mLblTime.frame = CGRectMake(textSize.width - 5, yOffset + textSize.height + 7, 70, 14);
+            mMessageView.frame = CGRectMake(242-textSize.width, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize + 5);
 
         }else {
-            mMessageView.frame = CGRectMake(45, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize);
-            mLblTime.frame = CGRectMake(5, yOffset + textSize.height + 10, 50, 12);
+            mMessageView.frame = CGRectMake(45, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize + 5);
+            mLblTime.frame = CGRectMake(5, yOffset + textSize.height + 7, 70, 14);
 
         }
     }else {
@@ -109,8 +107,9 @@
         [mLblMessage setHidden:YES];
         [mImgMessageBg setHidden:YES];
         mImgSharedPhoto.frame=CGRectMake(5,5,90,90);
-        mImgSharedPhoto.layer.masksToBounds=YES;
         [mImgSharedPhoto setHidden:NO];
+        
+        mImgSharedPhoto.layer.masksToBounds=YES;
         [mImgSharedPhoto.layer setCornerRadius:10];
         [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
         if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId]){
@@ -176,7 +175,7 @@
     if([message.mMsgType isEqualToString:MESSAGE_TYPE_NOTE])
     {
         height=ADDITIONAL_HEIGHT;
-        height+=[message.mMsg boundingRectWithSize:MESSAGEBOUNDARY options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.height+5;
+        height+=[message.mMsg boundingRectWithSize:MESSAGEBOUNDARY options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:MESSAGEFONT} context:nil].size.height+5;
     }
     else
     {

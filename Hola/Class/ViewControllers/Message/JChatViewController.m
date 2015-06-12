@@ -69,7 +69,7 @@
     textView.isScrollable = NO;
     textView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     textView.internalTextView.contentInset=UIEdgeInsetsMake(0, 0, 0, 0);
-    
+    textView.font = [UIFont fontWithName:@"lato" size:14];
     textView.minNumberOfLines = 1;
     textView.maxNumberOfLines = 6;
     textView.returnKeyType = UIReturnKeyDefault; //just as an example
@@ -91,7 +91,7 @@
     mViewForChat.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     current_Run=0;
     
-    mActivityIndicator=[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((mBtnSend.frame.size.width-20)/2, (mBtnSend.frame.size.height-20)/2, 20, 20)];
+    mActivityIndicator=[[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(-5, (mBtnSend.frame.size.height-20)/2, 20, 20)];
     mActivityIndicator.activityIndicatorViewStyle=UIActivityIndicatorViewStyleGray;
     [mBtnSend addSubview:mActivityIndicator];
     
@@ -112,6 +112,7 @@
 {
     JHomeDetailViewController *pHomeDetail = [JHomeDetailViewController sharedController];
     [pHomeDetail setMCurPerson:chatPartner];
+    [pHomeDetail setMUserId:[NSString stringWithFormat: @"%ld", (long)chatPartner.userid]];
     
     [self.navigationController pushViewController:pHomeDetail animated:YES];
 }
@@ -233,6 +234,9 @@
         [self showOverlay];
     
     //    chatPartner=[Engine gCurrentMessageHistory];
+    [mFullPhoto.layer setCornerRadius:mFullPhoto.frame.size.width / 2];
+    [mFullPhoto.layer setMasksToBounds:YES];
+        [mFullPhoto setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
 }
 
 - ( void ) viewWillDisappear : ( BOOL ) _animated
@@ -670,6 +674,7 @@
         
         [mBtnSend setEnabled:YES];
         [mActivityIndicator stopAnimating];
+
         NSData *data=(NSData*)responseObject;
         NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -870,6 +875,7 @@
     {
         [mActivityIndicator startAnimating];
         [mBtnSend setEnabled:NO];
+
         [self sendMessage:MESSAGE_TYPE_NOTE];
     }
     else

@@ -75,7 +75,7 @@
     NSDate *myDate =     [[NSDate alloc]initWithTimeIntervalSince1970:[info.mLastMsgDate intValue]];
 
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd/YY hh:mm"];
+    [dateFormat setDateFormat:@"MM/dd hh:mm"];
     NSString *prettyVersion = [dateFormat stringFromDate:myDate];
         [mLblTime setText:prettyVersion];
 
@@ -87,7 +87,7 @@
 {
     CGFloat height=0.0;
     
-    height=[message.mLastMsg sizeWithFont:[UIFont fontWithName:@"helvetica" size:13] constrainedToSize:CGSizeMake(170, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height+ADDITIONAL_HEIGHT;
+    height=[message.mLastMsg sizeWithFont:[UIFont fontWithName:@"lato" size:14] constrainedToSize:CGSizeMake(170, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height+ADDITIONAL_HEIGHT;
     return MAX(height, 71.0f);
 }
 

@@ -8,6 +8,9 @@
         <mutableArray key="Lato-Bold.ttf">
             <string>Lato-Bold</string>
         </mutableArray>
+        <mutableArray key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JChatViewController">
@@ -15,7 +18,7 @@
                 <outlet property="mBlankFrame" destination="vuL-2y-yiK" id="wUv-lH-skk"/>
                 <outlet property="mBtnPhotoSend" destination="Wvu-Zs-dIj" id="G1D-ij-FGc"/>
                 <outlet property="mBtnSend" destination="kY7-bm-xRU" id="BSF-Ch-ePM"/>
-                <outlet property="mFullPhoto" destination="yR0-5G-Dey" id="vK9-pa-28v"/>
+                <outlet property="mFullPhoto" destination="kgP-fN-0Kc" id="xNY-oh-Xn7"/>
                 <outlet property="mFullPhotoView" destination="65K-ud-sfY" id="cFq-FE-6H7"/>
                 <outlet property="mImgButtonView" destination="Ei3-Um-bVJ" id="qOn-3K-vaZ"/>
                 <outlet property="mImgPreview" destination="Yy3-jq-54r" id="RVT-YW-2oJ"/>
@@ -60,11 +63,11 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="j1Q-xm-K8O">
-                            <rect key="frame" x="45" y="8" width="220" height="35"/>
+                            <rect key="frame" x="45" y="8" width="206" height="35"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgTextField_InnerBlank.png" id="vuL-2y-yiK">
-                            <rect key="frame" x="36" y="0.0" width="228" height="50"/>
+                            <rect key="frame" x="36" y="0.0" width="225" height="50"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bgGray.png" id="nkA-KB-v0n">
@@ -75,10 +78,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kY7-bm-xRU">
-                            <rect key="frame" x="265" y="8" width="55" height="35"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kY7-bm-xRU">
+                            <rect key="frame" x="265" y="8" width="47" height="35"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
+                            <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                             <state key="normal" title="Send">
                                 <color key="titleColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -91,7 +94,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" id="Ei3-Um-bVJ">
-                            <rect key="frame" x="53" y="6" width="215" height="40"/>
+                            <rect key="frame" x="53" y="6" width="198" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Yy3-jq-54r">
@@ -99,9 +102,9 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="56V-8A-0Bp">
-                                    <rect key="frame" x="183" y="8" width="25" height="25"/>
+                                    <rect key="frame" x="165" y="8" width="25" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <state key="normal" image="cancel_button.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -147,8 +150,12 @@
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="kgP-fN-0Kc">
+                            <rect key="frame" x="282" y="21" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="StH-ZG-9cu" userLabel="View Profile">
-                            <rect key="frame" x="75" y="25" width="170" height="26"/>
+                            <rect key="frame" x="277" y="16" width="40" height="40"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -207,7 +214,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="470" y="293"/>
+            <point key="canvasLocation" x="649" y="297"/>
         </view>
     </objects>
     <resources>

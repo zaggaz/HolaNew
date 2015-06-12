@@ -721,7 +721,7 @@
         {
             NSDate *date = [dateFormatter dateFromString:mTxtEditBirthday.text];
             if(date)
-                pAge = [NSString stringWithFormat:@"%ldd", (long)[AppEngine ageFromBirthday:date]];
+                pAge = [NSString stringWithFormat:@"%ld", (long)[AppEngine ageFromBirthday:date]];
         }else {
             pAge = @"0";
         }

@@ -76,6 +76,7 @@
 {
     JHomeDetailViewController *pHomeDetail = [JHomeDetailViewController sharedController];
     [pHomeDetail setMCurPerson:mCurrentPerson];
+    [pHomeDetail setMUserId:[NSString stringWithFormat: @"%ld", (long)mCurrentPerson.userid]];
     
     [self.navigationController pushViewController:pHomeDetail animated:YES];
 }
