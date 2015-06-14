@@ -69,11 +69,10 @@
     textView.isScrollable = NO;
     textView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     textView.internalTextView.contentInset=UIEdgeInsetsMake(0, 0, 0, 0);
-    textView.font = [UIFont fontWithName:@"lato" size:14];
+    textView.font = [UIFont fontWithName:@"Lato-regular" size:14];
     textView.minNumberOfLines = 1;
     textView.maxNumberOfLines = 6;
     textView.returnKeyType = UIReturnKeyDefault; //just as an example
-    textView.font = [UIFont systemFontOfSize:14.0f];
     textView.delegate = self;
     textView.backgroundColor = [UIColor whiteColor];
     textView.internalTextView.layer.masksToBounds=YES;
@@ -671,7 +670,6 @@
     //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        
         [mBtnSend setEnabled:YES];
         [mActivityIndicator stopAnimating];
 
@@ -707,10 +705,12 @@
         }
         [Engine setGSrvTime: [dict objectForKey: @"current_time"]];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        mIsPause = NO;
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [mBtnSend setEnabled:YES];
         [mActivityIndicator stopAnimating];
+        mIsPause = NO;
     }];
     requestSent++;
     textView.text=@"";
