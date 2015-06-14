@@ -39,7 +39,7 @@
 
     [mImgProfilePhotoEdit.layer setCornerRadius:mImgProfilePhotoEdit.frame.size.height / 2];
     [mImgProfilePhotoEdit.layer setMasksToBounds:YES];
-    [mImgProfilePhotoEdit.layer setBorderColor:[UIColor colorWithRed:251/255.0f green:107/255.0f blue:97/255.0f alpha:1].CGColor];
+    [mImgProfilePhotoEdit.layer setBorderWidth:0];
     
     [mBtnProfileEdit.layer setCornerRadius:3.0f];
     [mBtnProfileEdit.layer setMasksToBounds:YES];
@@ -346,7 +346,8 @@
                     {
                         [SVProgressHUD dismiss];
                         [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
-                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName: PROFILE_PICTURE_CHANGED object: nil];
+
                     }
                     [mIndicatorProfileMainPhoto stopAnimating];
                     mBtnAddMainPhoto.enabled=YES;
@@ -368,6 +369,7 @@
     });
 
 }
+
 -(void)uploadProfileSubPhoto :(UIImage *)img
 {
 

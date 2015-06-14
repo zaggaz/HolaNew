@@ -50,6 +50,7 @@
                                            selector:@selector(redisplayUserFeed:)
                                            userInfo:nil
                                             repeats:YES];
+        [mImgUserPhoto setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

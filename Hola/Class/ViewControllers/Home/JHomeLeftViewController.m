@@ -42,15 +42,17 @@
     [mImgUserProfilePhoto setUserInteractionEnabled:YES];
     [mImgUserProfilePhoto addGestureRecognizer:recognizer];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(profilePicChanged:) name: PROFILE_PICTURE_CHANGED object: nil];
+}
+
+-(void) profilePicChanged:(id)sender {
+    [mImgUserProfilePhoto setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [mImgUserProfilePhoto setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
     [mLblUserName setText:[Engine gPersonInfo].mUserName];
-
-    
 }
 -(void)onTouchBtnUserProfile:(id)sender
 {
@@ -125,7 +127,6 @@
     return _cellMain;
 
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
