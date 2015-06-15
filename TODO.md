@@ -5,7 +5,7 @@
 - [ ] About me encode emoticons
 - [x] Chat font needs to be larger
 - [x] Chat messages sometimes not coming through
-- [ ] Chats right panel, notification number not going away
+- [x] Chats right panel, notification number not going away
 - [x] Messages can only be 1 line long
 
 ## Features
