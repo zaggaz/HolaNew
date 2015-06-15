@@ -3,8 +3,10 @@
 ## Bugs and Improvements
 - [ ] About me styling
 - [ ] About me encode emoticons
-- [ ] Chat font needs to be larger
-- [ ] Chat messages sometimes not coming through
+- [x] Chat font needs to be larger
+- [x] Chat messages sometimes not coming through
+- [ ] Chats right panel, notification number not going away
+- [ ] Messages can only be 1 line long
 
 ## Features
 - [ ] Chat should have profile picture on top bar
