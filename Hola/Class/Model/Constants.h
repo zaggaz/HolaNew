@@ -59,6 +59,8 @@
 
 #define SHOW_PROFILE                          @"SHOW_PROFILE"
 #define NOTIFICATION_LOGOUT                   @"NOTIFICATION_LOGOUT"
+#define PROFILE_PICTURE_CHANGED               @"PROFILE_PICTURE_CHANGED"
+
 #define NOTIFICATION_SETTING                  @"NOTIFICATION_SETTING"
 #define GENERAL_SETTING                       @"GENERAL_SETTING"
 #define ADD_RECOMMENDATION                    @"ADD_RECOMMENDATION"
