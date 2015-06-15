@@ -53,7 +53,9 @@
         
 
         mLblUserName.text = [NSString stringWithFormat:@"About %@",mCurPerson.name];
-        mLblUserDescription.text = mCurPerson.description;
+        NSData *decodedAboutData = [mCurPerson.description dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        NSString *decodedAbout = [[NSString alloc] initWithData:decodedAboutData encoding:NSNonLossyASCIIStringEncoding];
+        mLblUserDescription.text = decodedAbout;
         [self getUserDetail];
         
         if(mCurPerson)
@@ -74,7 +76,9 @@
 }
 -(void)displayUserDetail
 {
-    mLblUserDescription.text = mCurPerson.description;
+    NSData *decodedAboutData = [mCurPerson.description dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *decodedAbout= [[NSString alloc] initWithData:decodedAboutData encoding:NSNonLossyASCIIStringEncoding];
+    mLblUserDescription.text = decodedAbout;
     CGSize cz = [AppEngine messageSize:mCurPerson.description font:mLblUserDescription.font width:mLblUserDescription.frame.size.width];
     
     

@@ -144,7 +144,9 @@
     mTxtEditBirthday.text = [NSString stringWithFormat:@"%@", pUser.mBirthday];
     mTxtEditCity.text = pUser.mLocation;
     mSegEditGender.selectedSegmentIndex = [pUser.mGender integerValue];
-    mTxtAbout.text = pUser.mDescription;
+    NSData *decodedAboutData = [pUser.mDescription dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+    NSString *decodedAbout = [[NSString alloc] initWithData:decodedAboutData encoding:NSNonLossyASCIIStringEncoding];
+    mTxtAbout.text = decodedAbout;
     [mImgProfilePhotoEdit setImageWithURL:[NSURL URLWithString:pUser.mPhotoUrl] placeholderImage:[UIImage  imageNamed:@"user_placeholder.png"]];
     [[mViewEditUserOtherPhotoContainer subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     mIndicatorProfileMainPhoto.hidesWhenStopped = YES;
@@ -736,6 +738,8 @@
     NSMutableDictionary *args = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0",@"image_attached",  nil];
     SBJsonWriter *jsonWriter = [[SBJsonWriter alloc] init];
     NSString *jsonArgs = [jsonWriter stringWithObject: args];
+    NSData *encodedDescData = [mTxtAbout.text dataUsingEncoding:NSNonLossyASCIIStringEncoding];
+    NSString *encodedDesc = [[NSString alloc] initWithData:encodedDescData encoding:NSUTF8StringEncoding];
     
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"userid"];
@@ -752,7 +756,7 @@
     [parameters setObject:mTxtEditEmail.text forKey:@"email"];
     [parameters setObject:[NSString stringWithFormat:@"%d",(int)gender] forKey:@"gender"];
     [parameters setObject:mTxtEditBirthday.text forKey:@"birthday"];
-    [parameters setObject:mTxtAbout.text forKey:@"description"];
+    [parameters setObject:encodedDesc forKey:@"description"];
     
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

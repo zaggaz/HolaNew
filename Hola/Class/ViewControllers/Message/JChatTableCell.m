@@ -7,10 +7,8 @@
 #import <CoreText/CoreText.h>
 
 #define PLACEHOLDERIMAGE [UIImage imageNamed:@"icon_userplaceholder.png"]
-#define ASL_FONT [UIFont fontWithName:@"Gallaudet" size:48]
-#define MESSAGEFONT_ITALIC [UIFont fontWithName:@"Arial-ItalicMT" size:14]
 #define MESSAGEFONT [UIFont fontWithName:@"Lato-Regular" size:14]
-#define MESSAGEBOUNDARY CGSizeMake(0, 0)
+#define MESSAGEBOUNDARY CGSizeMake(205, 0)
 #define ADDITIONAL_HEIGHT 35
 
 
@@ -119,17 +117,20 @@
         }
     }
     
+    NSString *imgUrl;
     if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId])
     {
         mImgMessageBg.image = [[UIImage imageNamed:@"bubbleRight2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 20, 18, 25)];
         mPhotoView.frame = CGRectMake(272, mMessageView.frame.size.height-35, 40, 40);
+        imgUrl = [Engine gPersonInfo].mPhotoUrl;
     }else {
         mImgMessageBg.image = [[UIImage imageNamed:@"bubbleLeft2.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 20)];
         mPhotoView.frame = CGRectMake(5.0, mMessageView.frame.size.height-35, 40, 40);
+        imgUrl = [Engine gCurrentMessageHistory].photourl;
 
     }
     [mPhotoView setContentMode:UIViewContentModeScaleAspectFill];
-    [mPhotoView setImageWithURL:[NSURL URLWithString:[Engine gCurrentMessageHistory].photourl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
+    [mPhotoView setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"user_placeholder.png"]];
 
 }
 -(void)onTouchBtnAction:(id)sender
