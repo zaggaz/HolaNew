@@ -21,8 +21,8 @@
                     <rect key="frame" x="80" y="139" width="161" height="157"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="JCs-0e-iqe">
-                    <rect key="frame" x="44" y="409" width="232" height="44"/>
+                <view hidden="YES" contentMode="scaleToFill" id="JCs-0e-iqe">
+                    <rect key="frame" x="44" y="361" width="232" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="QQlogobtn.PNG" id="PFw-jq-FNl">
@@ -48,7 +48,7 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="23w-69-Bi9">
-                    <rect key="frame" x="44" y="461" width="232" height="44"/>
+                    <rect key="frame" x="44" y="413" width="232" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook_icon.png" id="7vc-CF-4Mx">
