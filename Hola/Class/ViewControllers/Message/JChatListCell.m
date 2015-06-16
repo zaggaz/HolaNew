@@ -75,7 +75,7 @@
     NSDate *myDate =     [[NSDate alloc]initWithTimeIntervalSince1970:[info.mLastMsgDate intValue]];
 
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd hh:mm"];
+    [dateFormat setDateFormat:@"MM/dd HH:mm"];
     NSString *prettyVersion = [dateFormat stringFromDate:myDate];
         [mLblTime setText:prettyVersion];
 

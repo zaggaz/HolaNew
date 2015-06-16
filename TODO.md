@@ -1,6 +1,8 @@
 # Hola TODOs
 
 ## Bugs and Improvements
+- [ ] Birthday is mandatory
+- [ ] Can't scroll in about me section
 - [ ] About me styling
 - [ ] About me encode emoticons
 - [x] Chat font needs to be larger

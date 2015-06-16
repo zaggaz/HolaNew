@@ -28,6 +28,11 @@
     } ) ;
     return sharedController ;
 }
+
+-(bool)connected {
+    return [AFNetworkReachabilityManager sharedManager].reachable;
+}
+
 - (void)viewDidLoad {
     
     [mSegLookingFor setFrame:CGRectMake(mSegLookingFor.frame.origin.x, mSegLookingFor.frame.origin.y, mSegLookingFor.frame.size.width, 25)];
@@ -61,7 +66,43 @@
     mSwitchVisibility.onTintColor = [UIColor clearColor];
     [mViewVisibilityContentContainer addSubview:mSwitchVisibility];
     
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        
+        UIColor * greenColor = [UIColor colorWithRed:57/255.0f green:209/255.0f blue:49/255.0f alpha:1.0f];
+        UIColor * redColor = [UIColor colorWithRed:255/255.0f green:0/255.0f blue:0/255.0f alpha:1.0f];
+
+        switch (status) {
+            case AFNetworkReachabilityStatusReachableViaWWAN:
+                mConnectivity.text = @"Connected (Mobile)";
+                mConnectivity.textColor = greenColor;
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi:
+                mConnectivity.text = @"Connected (WiFi)";
+                mConnectivity.textColor = greenColor;
+                break;
+            case AFNetworkReachabilityStatusUnknown:
+                mConnectivity.text = @"Unknown";
+                mConnectivity.textColor = [UIColor grayColor];
+                break;
+            case AFNetworkReachabilityStatusNotReachable:
+                mConnectivity.text = @"No Connection";
+                mConnectivity.textColor = redColor;
+                break;
+            default:
+                mConnectivity.text = @"No Connection";
+                mConnectivity.textColor = redColor;
+                break;
+        }
+        
+    }];
+    
+    if ([self connected]) {
+        NSLog(@"Reachable");
+    }else {
+        NSLog(@"Not Reachable");
+    }
     
     //distance slider
 //    UIImage* sliderCenterImage = [UIImage imageNamed:@"sliderbtn.PNG"];

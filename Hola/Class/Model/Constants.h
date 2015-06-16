@@ -9,16 +9,16 @@
 
 //
 
-#define WEB_SERVICES_URL              @"http://192.168.2.106/hola/webservice/webservice.php"
-#define WEB_SITE_BASE_URL              @"http://192.168.2.106/hola/"
+//#define WEB_SERVICES_URL              @"http://192.168.2.106/hola/webservice/webservice.php"
+//#define WEB_SITE_BASE_URL              @"http://192.168.2.106/hola/"
 
 
 //#define WEB_SERVICES_URL                @"http://whitesyndicateapps.com/hola/webservice/webservice.php"
 //#define WEB_SITE_BASE_URL               @"http://whitesyndicateapps.com/hola/"
 //#define WEB_SERVICES_URL                @"http://localhost:8888/Hola/hola_backend2/webservice/webservice.php"
 //#define WEB_SITE_BASE_URL               @"http://localhost:8888/Hola/hola_backend2/"
-//#define WEB_SERVICES_URL                @"http://service.letshola.com/webservice/webservice.php"
-//#define WEB_SITE_BASE_URL               @"http://service.letshola.com/"
+#define WEB_SERVICES_URL                @"http://holaapp.azurewebsites.net/webservice/webservice.php"
+#define WEB_SITE_BASE_URL               @"http://holaapp.azurewebsites.net/"
 
 #define WEB_SERVICE_RELATIVE_URL        @"webservice/webservice.php"
 
@@ -84,7 +84,7 @@
 
 
 
-#define MSG_SERVICE_UNAVAILABLE @"Sorry! Service is not available now."
+#define MSG_SERVICE_UNAVAILABLE @"Cannot connect. Please check your internet connection."
 #define MSG_INVALID_TOKEN @"Your login has expired, please login again."
 
 #define MSG_LOADING             @"Loading..."
@@ -107,10 +107,10 @@
 #define MSG_LASTNAME_SHOULD_NOT_EMPTY @"Please enter last name."
 
 
-#define SETTING_MIN_AGE     15
-#define SETTING_MAX_AGE     59
+#define SETTING_MIN_AGE     18
+#define SETTING_MAX_AGE     45
 #define SETTING_MIN_DISTANCE 0
-#define SETTING_MAX_DISTANCE 1000
+#define SETTING_MAX_DISTANCE 100
 
 #define NOTIFICATION_SETTING_CHANGED          @"NOTIFICATION_SETTING_CHANGED"
 #define UPDATE_TOP_BADGE                      @"UPDATE_TOP_BADGE"

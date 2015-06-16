@@ -55,6 +55,8 @@
 + (UIColor *) colorFromString:(NSString *)colorStr;
 #pragma mark singleton
 + (id)getInstance;
++ (void)clearInstance;
+
 #pragma mark
 - (void)setValue:(id)value forKey:(NSString *)key;
 - (id)valueForKey:(NSString *)key;

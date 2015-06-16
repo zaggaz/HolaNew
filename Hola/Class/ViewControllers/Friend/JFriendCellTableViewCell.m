@@ -43,7 +43,7 @@
     else myDate = [[NSDate alloc]initWithTimeIntervalSince1970:person.mSettime];
 
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"MM/dd/YY hh:mm"];
+    [dateFormat setDateFormat:@"MM/dd/YY HH:mm"];
     NSString *prettyVersion = [dateFormat stringFromDate:myDate];
     [mLblTime setText: [NSString stringWithFormat:@"%@ %@",mPrefix,prettyVersion]];
     

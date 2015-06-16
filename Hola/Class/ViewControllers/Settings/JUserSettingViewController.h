@@ -25,6 +25,8 @@
     
     IBOutlet UIScrollView *mScrollMainContainer;
     IBOutlet UIView *mViewMainContainer;
+
+    IBOutlet UILabel *mConnectivity;
     
     SevenSwitch *mSwitchPush;
     SevenSwitch *mSwitchVisibility;

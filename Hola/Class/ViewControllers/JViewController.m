@@ -16,6 +16,7 @@
 #import "JChatViewController.h"
 #import "JUserSettingViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
 
 #import "JSearchViewController.h"
 #import "JMessgeHistoryViewController.h"
@@ -277,8 +278,18 @@
         [defaults removeObjectForKey:@"current_user"];
         [defaults synchronize];
     }
-    [Engine gPersonInfo].mUserId=nil;
+    [AppEngine clearInstance];
     
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Messages" inManagedObjectContext:context];
+    NSFetchRequest *fetch = [[NSFetchRequest alloc] init];
+    [fetch setEntity:entity];
+    NSArray *messages=[context executeFetchRequest:fetch error:nil];
+    for (id message in messages) {
+        [context deleteObject:message];
+    }
+
     [UIView animateWithDuration:0.75
                      animations:^{
                          [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];

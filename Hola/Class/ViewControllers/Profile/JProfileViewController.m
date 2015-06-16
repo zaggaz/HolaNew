@@ -49,7 +49,6 @@
     [mBtnProfileEditDone.layer setMasksToBounds:YES];
   //  [mBtnProfileEditDone setBackgroundColor:[UIColor colorWithRed:232/255.0 green:232/255.0 blue:232/255.0 alpha:1]];
     [mBtnProfileEditDone setBackgroundColor:[UIColor colorWithRed:251/255.0f green:107/255.0f blue:97/255.0f alpha:1]];
-  
     
     UITapGestureRecognizer* recognizer;
     recognizer=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapBackground:)];
@@ -102,7 +101,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-
     if([mPageType isEqualToString:@"setting"])
     {
         [mBtnShowSideRightView setHidden:NO];
@@ -127,7 +125,7 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
+                                                selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
@@ -140,6 +138,7 @@
 -(void)initProfileEditView
 {
     JUserInfo *pUser = [Engine gPersonInfo];
+    mLblUserName.text = pUser.mUserName;
     mTxtEditEmail.text = pUser.mEmail;
     mTxtEditBirthday.text = [NSString stringWithFormat:@"%@", pUser.mBirthday];
     mTxtEditCity.text = pUser.mLocation;

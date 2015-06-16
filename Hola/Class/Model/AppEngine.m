@@ -23,16 +23,24 @@
 @synthesize gCurrentMessageHistory;
 @synthesize gNewMessagesCount;
 
+static AppEngine * instance = nil;
+
 #pragma mark singleton
 
 + (id)getInstance {
-    static AppEngine * instance = nil;
     if (!instance) {
         instance = [[AppEngine alloc] init];
 
     }
     return instance;
 }
+
++(void)clearInstance {
+    @synchronized(self) {
+        instance = nil;
+    }
+}
+
 #pragma mark init
 
 - (id)init {
