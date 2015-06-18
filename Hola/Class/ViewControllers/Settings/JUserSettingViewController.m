@@ -136,7 +136,7 @@
 
     
     
-    [mScrollMainContainer setContentSize:CGSizeMake(mViewMainContainer.frame.size.width, mViewMainContainer.frame.size.height + 20)];
+    [mScrollMainContainer setContentSize:CGSizeMake(mViewMainContainer.frame.size.width, mViewMainContainer.frame.size.height + 60)];
     
     [super viewDidLoad];
     [self loadSettings];

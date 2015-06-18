@@ -24,7 +24,7 @@
             <subviews>
                 <view contentMode="scaleToFill" id="oJe-9Q-H9W">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo2.png" id="rdd-Ly-Rma">
                             <rect key="frame" x="114" y="25" width="92" height="26"/>
@@ -45,7 +45,7 @@
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="gz4-AA-IDh">
                     <rect key="frame" x="0.0" y="60" width="320" height="508"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="HEe-f3-Igy">
                             <rect key="frame" x="20" y="15" width="280" height="280"/>

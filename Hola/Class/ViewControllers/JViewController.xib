@@ -19,7 +19,7 @@
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" id="A5C-PP-S4s">
                     <rect key="frame" x="80" y="139" width="161" height="157"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask"/>
                 </imageView>
                 <view hidden="YES" contentMode="scaleToFill" id="JCs-0e-iqe">
                     <rect key="frame" x="44" y="361" width="232" height="44"/>
@@ -49,7 +49,7 @@
                 </view>
                 <view contentMode="scaleToFill" id="23w-69-Bi9">
                     <rect key="frame" x="44" y="413" width="232" height="44"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="facebook_icon.png" id="7vc-CF-4Mx">
                             <rect key="frame" x="5" y="3" width="31" height="37"/>

@@ -35,8 +35,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="2" sectionFooterHeight="1" id="ukq-T8-Ynh">
+                    <rect key="frame" x="0.0" y="60" width="320" height="455"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="s7p-he-iLh"/>
+                        <outlet property="delegate" destination="-1" id="W5L-Ys-gmX"/>
+                    </connections>
+                </tableView>
                 <view contentMode="scaleToFill" id="7Ve-gI-RuQ">
-                    <rect key="frame" x="0.0" y="85" width="320" height="25"/>
+                    <rect key="frame" x="0.0" y="60" width="320" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sending Photo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IPI-Ix-Cb4">
@@ -47,20 +56,11 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.83137254900000002" green="0.41960784309999999" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="2" sectionFooterHeight="1" id="ukq-T8-Ynh">
-                    <rect key="frame" x="0.0" y="85" width="320" height="430"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="s7p-he-iLh"/>
-                        <outlet property="delegate" destination="-1" id="W5L-Ys-gmX"/>
-                    </connections>
-                </tableView>
                 <view opaque="NO" contentMode="scaleToFill" id="zhq-9p-dZe">
                     <rect key="frame" x="0.0" y="518" width="320" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="j1Q-xm-K8O">
                             <rect key="frame" x="45" y="8" width="206" height="35"/>
@@ -83,7 +83,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="16"/>
                             <state key="normal" title="Send">
-                                <color key="titleColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <color key="titleColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="disabled">
@@ -131,7 +131,7 @@
                 </view>
                 <view contentMode="scaleToFill" id="76G-ae-EBe">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="4kx-ia-bz1">
                             <rect key="frame" x="-25" y="10" width="95" height="55"/>

@@ -79,7 +79,7 @@
 #define GOOGLE_API_KEY                  @"AIzaSyAmRfBs0UttPCPlyvUv2RwNxnLfkKpJIh0"
 
 #define IS_IPHONE5 ( (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568) ? YES : NO )
-#define SCREEN_HEIGHT ( (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568) ? 568 : 480 )
+#define SCREEN_HEIGHT ( (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [UIScreen mainScreen].bounds.size.height == 568) ? 568 : 568 )
 
 
 

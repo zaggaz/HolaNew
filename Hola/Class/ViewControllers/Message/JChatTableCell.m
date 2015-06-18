@@ -105,6 +105,8 @@
         [mLblMessage setHidden:YES];
         [mImgMessageBg setHidden:YES];
         mImgSharedPhoto.frame=CGRectMake(5,5,90,90);
+        [mImgSharedPhoto.layer setBorderColor:[[UIColor lightGrayColor]CGColor]];
+        [mImgSharedPhoto.layer setBorderWidth:0.5];
         [mImgSharedPhoto setHidden:NO];
         
         mImgSharedPhoto.layer.masksToBounds=YES;
@@ -180,7 +182,7 @@
     }
     else
     {
-        height=110;
+        height=120;
         
     }
     return MAX(height, 40.0f);

@@ -35,7 +35,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    mPageType = @"introduction";
 
     [mImgProfilePhotoEdit.layer setCornerRadius:mImgProfilePhotoEdit.frame.size.height / 2];
     [mImgProfilePhotoEdit.layer setMasksToBounds:YES];
@@ -55,9 +54,6 @@
     recognizer.numberOfTouchesRequired=1;
     recognizer.delegate=self;
     [self.view addGestureRecognizer:recognizer];
-
-    [mBtnShowSideLeftView setHidden:YES];
-    [mBtnShowSideRightView setHidden:YES];
     
     datePicker = [[UIDatePicker alloc]init];
     datePicker.datePickerMode = UIDatePickerModeDate;
@@ -74,7 +70,6 @@
     [datePicker setMinimumDate:minDate];
     
     [mTxtEditBirthday setInputView:datePicker];
-    
     UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 44)];
     [toolBar setTintColor:[UIColor grayColor]];
     UIBarButtonItem *doneBtn = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleBordered target:self action:@selector(ShowSelectedDate)];
@@ -84,6 +79,13 @@
     [toolBar setItems:[NSArray arrayWithObjects:cancelBtn, spacer, doneBtn, nil]];
     [mTxtEditBirthday setInputAccessoryView:toolBar];
     
+    [mScrollProfileEdit setContentSize:CGSizeMake(mViewProfileEditContainer.frame.size.width, mViewProfileEditContainer.frame.size.height + 60)];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *currentLoginStep = [defaults objectForKey:@"current_user_step"];
+    if([currentLoginStep isEqualToString : @"new"]) {
+        [mBtnShowSideLeftView setHidden:YES];
+    }
     
     [self initMedia];
 }
@@ -101,19 +103,6 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([mPageType isEqualToString:@"setting"])
-    {
-        [mBtnShowSideRightView setHidden:NO];
-        [mBtnShowSideLeftView setHidden:NO];
-        [mBtnProceed setHidden:YES];
-    }
-    else
-    {
-        [mBtnShowSideRightView setHidden:YES];
-        [mBtnShowSideLeftView setHidden:YES];
-        [mBtnProceed setHidden:NO];
-        
-    }
     if(![Engine isBackAction])
     {
         [self initProfileEditView];
@@ -169,7 +158,7 @@
     [mBgGrayView setHidden:YES];
     [mDeletePhotoConfirmView setFrame:CGRectMake(20, (SCREEN_HEIGHT-mDeletePhotoConfirmView.frame.size.height)/2.0,280, mDeletePhotoConfirmView.frame.size.height)];
     [mDeletePhotoConfirmView setHidden:YES];
-        [mScrollProfileEdit setFrame:CGRectMake(0, SCREEN_HEIGHT - mScrollProfileEdit.frame.size.height, mScrollProfileEdit.frame.size.width, mScrollProfileEdit.frame.size.height)];
+//        [mScrollProfileEdit setFrame:CGRectMake(0, self.view.frame.size.height - mScrollProfileEdit.frame.size.height, mScrollProfileEdit.frame.size.width, mScrollProfileEdit.frame.size.height)];
     
     [self.view addSubview:mScrollProfileEdit];
     [self.view addSubview:mBgGrayView];
@@ -456,64 +445,7 @@
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [mBtnAddMorePhoto setEnabled:YES];
 }
-#pragma mark edit view
--(IBAction)onTouchBtnProfileEdit:(id)sender
-{
-    mBtnProfileEdit.enabled=false;
-//    [mBtnEditDone setHidden:NO];
-    //mBtnAddMainPhoto.userInteractionEnabled = NO;
-    [self showEditView];
-}
--(IBAction)onTouchBtnProfileEditDone:(id)sender
-{
-    mBtnProfileEdit.enabled=YES;
-    //mBtnAddMainPhoto.userInteractionEnabled = YES;
-    [self hideEditView];
-}
--(void)showEditView
-{
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        mViewProfileContainer.transform = CGAffineTransformMakeTranslation(0,mViewProfileContainer.frame.size.height);
-    } completion:^(BOOL finished){
-        [mBtnProfileEditDone setHidden:NO];
-        [mBtnProfileEdit setHidden:YES];
-        [mScrollProfileEdit setHidden:NO];
-        
-        mScrollProfileEdit.transform = CGAffineTransformMakeTranslation(0,mScrollProfileEdit.frame.size.height);
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            
-            mScrollProfileEdit.transform = CGAffineTransformMakeTranslation(0,SCREEN_HEIGHT - mScrollProfileEdit.frame.size.height);
-        } completion:^(BOOL finished){
-            [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                //mViewEditContainer.transform = CGAffineTransformIdentity;
-            } completion:^(BOOL finished){
-            }];
-        }];
-    }];
-}
--(void)hideEditView
-{
-    //    mEditView.transform = CGAffineTransformIdentity;
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        mScrollProfileEdit.transform =  CGAffineTransformMakeTranslation(0,mScrollProfileEdit.frame.size.height);
-    } completion:^(BOOL finished){
-        [mBtnProfileEditDone setHidden:YES];
-        [mBtnProfileEdit setHidden:NO];
-        
-        mScrollProfileEdit.hidden = YES;
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            mViewProfileContainer.transform = CGAffineTransformMakeTranslation(0,0);
-        } completion:^(BOOL finished){
-            // do something once the animation finishes, put it here
-            [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-                mViewProfileContainer.transform = CGAffineTransformIdentity;
-            } completion:^(BOOL finished){
-                // do something once the animation finishes, put it here
-            }];
-        }];
-        
-    }];
-}
+
 - (void)initSubPhotos
 {
     //NSMutableArray* photos=[Engine gPersonInfo].mArrPic;
@@ -676,8 +608,6 @@
 
 #pragma mark keyboard notification
 -(void) keyboardWillHide:(NSNotification *)note{
-    if([mTxtEditBirthday isFirstResponder])
-        return;
     NSDictionary *info = [note userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     [mScrollProfileEdit setContentSize:CGSizeMake(mScrollProfileEdit.frame.size.width,mScrollProfileEdit.contentSize.height - kbSize.height)];
@@ -685,17 +615,17 @@
     
 }
 -(void) keyboardWillShow:(NSNotification *)note{
-    if([mTxtEditBirthday isFirstResponder])
-        return;
-    
     NSDictionary *info = [note userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     [mScrollProfileEdit setContentSize:CGSizeMake(mScrollProfileEdit.frame.size.width,mScrollProfileEdit.contentSize.height + kbSize.height)];
-    
+    if([mTxtEditEmail isFirstResponder])
+        [mScrollProfileEdit setContentOffset:CGPointMake(0, 30)];
+    if([mTxtEditBirthday isFirstResponder])
+        [mScrollProfileEdit setContentOffset:CGPointMake(0, 100)];
     if([mTxtAbout isFirstResponder] )
-        [mScrollProfileEdit setContentOffset:CGPointMake(0, mScrollProfileEdit.frame.size.height - kbSize.height)];
+        [mScrollProfileEdit setContentOffset:CGPointMake(0, mScrollProfileEdit.frame.size.height - kbSize.height + 15)];
     if([mTxtEditCity isFirstResponder])
-        [mScrollProfileEdit setContentOffset:CGPointMake(0, mScrollProfileEdit.frame.size.height - kbSize.height - 150)];
+        [mScrollProfileEdit setContentOffset:CGPointMake(0, mScrollProfileEdit.frame.size.height - kbSize.height - 70)];
     
 }
 
@@ -713,20 +643,45 @@
 
 -(IBAction)onTouchBtnSaveProfile:(id)sender
 {
-    
+    // Validation
+    CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+    // animate from 2pt to 4pt wide border ...
+    colorAnimation.fromValue = (id)[[UIColor redColor] CGColor];
+    colorAnimation.toValue   = (id)[[UIColor clearColor] CGColor];
+    colorAnimation.duration = 1.5;
+    if (!mTxtEditEmail.text || [mTxtEditEmail.text isEqualToString:@""]) {
+        mTxtEditEmail.layer.borderWidth = 2;
+        mTxtEditEmail.layer.borderColor = [[UIColor clearColor] CGColor];
+        [mTxtEditEmail.layer addAnimation:colorAnimation forKey:@"color"];
+        return;
+    }
+    if (!mTxtEditBirthday.text || [mTxtEditBirthday.text isEqualToString:@""]) {
+        mTxtEditBirthday.layer.borderWidth = 2;
+        mTxtEditBirthday.layer.borderColor = [[UIColor clearColor] CGColor];
+        [mTxtEditBirthday.layer addAnimation:colorAnimation forKey:@"color"];
+        return;
+    }
+
     NSString *pAge = @"";
     if(![mTxtEditBirthday.text isKindOfClass:[NSNull class]])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"dd/MM/yyyy"];
         
-        if(![mTxtEditBirthday.text isEqualToString:@""])
-        {
             NSDate *date = [dateFormatter dateFromString:mTxtEditBirthday.text];
-            if(date)
+        if(date){
                 pAge = [NSString stringWithFormat:@"%ld", (long)[AppEngine ageFromBirthday:date]];
+            if (SETTING_MIN_AGE >= pAge.intValue || pAge.intValue >= SETTING_MAX_AGE) {
+                mTxtEditBirthday.layer.borderWidth = 2;
+                mTxtEditBirthday.layer.borderColor = [[UIColor clearColor] CGColor];
+                [mTxtEditBirthday.layer addAnimation:colorAnimation forKey:@"color"];
+                return;
+            }
         }else {
-            pAge = @"0";
+            mTxtEditBirthday.layer.borderWidth = 2;
+            mTxtEditBirthday.layer.borderColor = [[UIColor clearColor] CGColor];
+            [mTxtEditBirthday.layer addAnimation:colorAnimation forKey:@"color"];
+            return;
         }
     }
     

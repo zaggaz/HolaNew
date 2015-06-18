@@ -670,9 +670,7 @@
     //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        [mBtnSend setEnabled:YES];
         [mActivityIndicator stopAnimating];
-
         NSData *data=(NSData*)responseObject;
         NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
@@ -708,7 +706,6 @@
         mIsPause = NO;
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [mBtnSend setEnabled:YES];
         [mActivityIndicator stopAnimating];
         mIsPause = NO;
     }];
@@ -973,7 +970,6 @@
                  else
                  {
                      [mActivityIndicator stopAnimating];
-                     [mBtnSend setEnabled:YES];
                      [self processReceivedMessages:data];
                      [mPhotoNotifMessage setText:@"Photo Sent"];
                      [self hidePhotoNotification];
