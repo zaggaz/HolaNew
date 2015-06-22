@@ -45,6 +45,8 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    
+    
     timer = [NSTimer scheduledTimerWithTimeInterval:5
                                              target:self
                                            selector:@selector(redisplayUserFeed:)
@@ -104,10 +106,11 @@
         [self setRadarViewAlphaTo:1.0f];
 //        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [mArrUsers removeAllObjects];
-        self.frontCardView = nil;
-        self.backCardView = nil;
+       
         [self.frontCardView removeFromSuperview];
         [self.backCardView removeFromSuperview];
+        self.frontCardView = nil;
+        self.backCardView = nil;
         [Engine setBUserSettingChanged:NO];
     }
     if([Engine isBackAction])
@@ -122,8 +125,10 @@
     if (mArrUsers.count == 0 && !self.frontCardView) {
         [self setRadarViewAlphaTo:1.0f];
         [Engine setBUserSettingChanged:NO];
-        [self.frontCardView removeFromSuperview];
-        [self.backCardView removeFromSuperview];
+//        self.frontCardView = nil;
+//        self.backCardView = nil;
+//        [self.frontCardView removeFromSuperview];
+//        [self.backCardView removeFromSuperview];
         [self getMatchedUsers];
     }
 }
@@ -135,6 +140,8 @@
 }
 -(void) getMatchedUsers
 {
+    [mArrUsers removeAllObjects];
+    
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"userid"];
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"uId"];
@@ -144,6 +151,7 @@
     
     DataService *dataService = [DataService sharedDataService];
     [dataService postWithParameters:parameters successHandler:^(NSArray *pUserArr) {
+
         for(NSDictionary *pCurDict in pUserArr)
         {
             Person *pCurPerson = [[Person alloc]initWithDictionary:pCurDict];
@@ -172,6 +180,8 @@
 //    [self.view addSubview:self.frontCardView];
     [self.view insertSubview:self.frontCardView belowSubview:mViewSearchContainer];
     self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]];
+    [self.backCardView setBackgroundColor:[UIColor grayColor]];
+    
     [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
     [self.frontCardView.layer setBorderWidth:0.0f];
     [self.backCardView.layer setBorderWidth:0.0f];

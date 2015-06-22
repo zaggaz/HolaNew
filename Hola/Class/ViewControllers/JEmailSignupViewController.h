@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface JEmailSignupViewController : UIViewController
-
+{
+    
+}
++ ( JEmailSignupViewController* ) sharedController;
 @end

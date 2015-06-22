@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "JViewController.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <Parse/Parse.h>
 @interface AppDelegate ()
 
 @end
@@ -35,10 +36,94 @@
     [SVProgressHUD setBackgroundColor:[UIColor darkGrayColor]];
     [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
     
+    // parse for pushnotification
+    [Parse setApplicationId:@"h5EuVf5z6Al1A1JkF92LBtOYeIFdNlxoQw4MjUuF" clientKey:@"vAMboYlwhpmIpURygJR3z379fc047SXCYdJvkfwi"];
     
     
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                             |UIRemoteNotificationTypeSound
+                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
+    }
+    
+
     return YES;
 }
+
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    //register to receive notifications
+    [application registerForRemoteNotifications];
+
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+
+    [application registerForRemoteNotifications];
+    if(application.applicationState==UIApplicationStateInactive)
+    {
+        //        [[NSNotificationCenter defaultCenter] postNotificationName: NOTIFICATION_ACTION object: userInfo];
+        
+    }
+    else
+    {
+    }
+    
+}
+#else
+
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+    //register to receive notifications
+   // [application registerForRemoteNotifications];
+}
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
+{
+    //handle the actions
+    //    if ([identifier isEqualToString:@"declineAction"]){
+    //    }
+    //    else if ([identifier isEqualToString:@"answerAction"]){
+    //    }
+}
+
+#endif
+
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Store the deviceToken in the current Installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation  saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSLog(@"Succeed: %d   Error: %@", succeeded, error);
+    }];
+    
+    
+}
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"error %@",error);
+}
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"received notification info %@",userInfo);
+
+}
+
+
+
+
+
 
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
@@ -74,7 +159,18 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-
+    [FBAppEvents activateApp];
+    [FBAppCall handleDidBecomeActiveWithSession:[FBSession activeSession]];
+    
+    
+    // parse
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0)
+    {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -161,5 +257,14 @@
         }
     }
 }
+
+
+
+
+
+
+
+
+
 
 @end
