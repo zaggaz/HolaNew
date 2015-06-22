@@ -45,6 +45,11 @@
             [MBProgressHUD hideHUDForView:view animated:YES];
             if(response.responseData.error)
             {
+                if([response.responseData.error_type isEqualToString:@"DUPLICATE_EMAIL"])
+                {
+                    [SVProgressHUD showErrorWithStatus:MSG_SERVICE_DUPLICATE_EMAIL];
+                    return ;
+                }
                 [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
             }
             else
@@ -62,6 +67,7 @@
                 
             }else {
                 [MBProgressHUD hideHUDForView:view animated:YES];
+
                 [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
             }
             
@@ -72,4 +78,5 @@
         
     }];    
 };
+
 @end

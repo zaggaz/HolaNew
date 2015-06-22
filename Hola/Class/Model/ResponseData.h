@@ -11,7 +11,8 @@
 @interface ResponseData : NSObject
 
 @property (nonatomic) BOOL error;
-@property (nonatomic) NSArray* data;
+@property (nonatomic) NSString *error_type;
+@property (nonatomic) id data;
 
 - (id) initWithDictionary: (NSDictionary *)dataDictionary;
 

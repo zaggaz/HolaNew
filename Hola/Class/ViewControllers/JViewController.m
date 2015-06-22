@@ -22,6 +22,8 @@
 #import "JMessgeHistoryViewController.h"
 #import "DataService.h"
 
+#import <Parse/Parse.h>
+
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 @interface JViewController ()
@@ -77,9 +79,12 @@
     [mBtnFacebookLogin.layer setBorderColor:[UIColor whiteColor].CGColor];
     [mBtnFacebookLogin.layer setBorderWidth:1.0f];
     
+    [mBtnEmailLogin.layer setCornerRadius:3.0f];
+    [mBtnEmailLogin.layer setBorderColor:[UIColor whiteColor].CGColor];
+    [mBtnEmailLogin.layer setBorderWidth:1.0f];
+    
     if([CLLocationManager locationServicesEnabled])
     {
-        
         
         locationManager = [[CLLocationManager alloc] init];
         if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
@@ -91,6 +96,27 @@
         locationManager.delegate = self;
         [locationManager startUpdatingLocation];
     }
+    
+    [mViewEmailLoginContainer setFrame:CGRectMake(0, 100, mViewEmailLoginContainer.frame.size.width, mViewEmailLoginContainer.frame.size.height)];
+    [mViewEmailLoginMainContainer.layer setCornerRadius:10];
+    [mViewEmailLoginMainContainer.layer setMasksToBounds:YES];
+    [self.view addSubview:mViewEmailLoginContainer];
+    [mViewEmailLoginContainer setAlpha:0];
+    
+
+    [mViewEmailSignupContainer setFrame:CGRectMake(0, SCREEN_HEIGHT, mViewEmailSignupContainer.frame.size.width, mViewEmailSignupContainer.frame.size.height)];
+    [mViewEmailSignupMainContainer.layer setCornerRadius:10];
+    [mViewEmailSignupMainContainer.layer setMasksToBounds:YES];
+    [self.view addSubview:mViewEmailSignupContainer];
+
+    
+    
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:mBtnCreateAccount.titleLabel.text];
+    [attributeString addAttribute:NSUnderlineStyleAttributeName
+                            value:[NSNumber numberWithInt:1]
+                            range:(NSRange){0,[attributeString length]}];
+    [mBtnCreateAccount setAttributedTitle:attributeString forState:UIControlStateNormal];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,7 +143,8 @@
     NSDictionary *dictLogin = [defaults dictionaryForKey:@"login_info"];
     if(dictLogin)
     {
-      
+        mTxtEmail.text = [dictLogin objectForKey:@"email"];
+        mTxtPassword.text = [dictLogin objectForKey:@"password"];
     }
     if(dict)
     {
@@ -140,9 +167,25 @@
         }
         
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [self.view endEditing:YES];
+}
+#pragma mark location manager
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -163,6 +206,7 @@
     
 }
 
+#pragma mark notifications
 -(void)onActionShowHome :(id)sender
 {
     [SVProgressHUD dismiss];
@@ -201,14 +245,13 @@
               [[NSNotificationCenter defaultCenter]postNotificationName:SHOW_MAIN_HOME object:nil];
             
         }
-      
-        
-        
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation setObject: [Engine gPersonInfo].mUserId forKey: @"owner"];
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSLog(@"Succeed: %d   Error: %@",succeeded, error);
+        }];
         return;
-        
     }
-
-
 }
 - (void)onCloseSideView: (NSNotification *)notification
 {
@@ -303,7 +346,230 @@
     [session close];
     [FBSession setActiveSession:nil];
 }
-#pragma mark login
+
+#pragma mark email login
+-(IBAction)onTouchBtnEmailLogin:(id)sender
+{
+    [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self.view insertSubview:mViewMaskBackground belowSubview:mViewEmailLoginContainer];
+        [mViewEmailLoginContainer setAlpha:1];
+        
+    } completion:^(BOOL finished){
+        
+    }];
+}
+-(IBAction)onTouchBtnHideEmailLogin:(id)sender
+{
+    [self.view endEditing:YES];
+    [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        
+        [mViewEmailLoginContainer setAlpha:0];
+        
+    } completion:^(BOOL finished){
+        [mViewMaskBackground removeFromSuperview];
+    }];
+}
+-(IBAction)onTouchBtnDoEmailLogin:(id)sender
+{
+    if(mTxtEmail.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_EMAIL_SHOULD_NOT_EMPTY];
+        
+        return;
+    }
+    if(![AppEngine validEmail: mTxtEmail.text])
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_REGISTER_EMAIL_ADDRESS_NOT_VALID];
+        return;
+    }
+    if(mTxtPassword.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_PASSWORD_SHOULD_NOT_EMPTY];
+        return;
+    }
+    
+    NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
+
+    [parameters setObject:mTxtEmail.text forKey:@"email"];
+    [parameters setObject:mTxtPassword.text forKey:@"password"];
+
+    
+    [parameters setObject:@"login_signup" forKey:@"type"];
+    [parameters setObject:@"direct_login" forKey:@"cmd"];
+    
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        //NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSString *res = [dict objectForKey: @"success"];
+        if ([res isEqualToString: @"1"])
+        {
+            
+            NSDictionary *data = [dict objectForKey: @"data"];
+            NSString *error1 = [data objectForKey: @"error"];
+            
+            if([error1 isEqualToString:@"1"])
+            {
+                if([[data objectForKey:@"result"] isEqualToString:@"user_is_blocked"])
+                {
+                    //[SVProgressHUD showErrorWithStatus:MSG_USER_BLOCKED];
+                    return;
+                }
+                [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+            }
+            else
+            {
+                [SVProgressHUD dismiss];
+                if([[data objectForKey:@"error"] isEqualToString:@"0"])
+                {
+                    [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
+                    
+                    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                   
+                        [mTxtEmail setText:@""];
+                        [mTxtPassword setText:@""];
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    
+                        [defaults setObject:nil forKey:@"login_info"];
+                        [defaults synchronize];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_SETTING_CHANGED object:nil];
+                    [self onTouchBtnHideEmailLogin:nil];
+                    [self onActionShowHome:nil];
+                }
+                else if([[data objectForKey:@"error"] isEqualToString:@"1"])
+                {
+                    [SVProgressHUD showErrorWithStatus:MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH];
+                    return ;
+                }
+                else if([[data objectForKey:@"error"] isEqualToString:@"2"])
+                {
+                    [SVProgressHUD showErrorWithStatus:MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH];
+                    return ;
+                }
+            }
+        }
+        else
+        {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+            
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+        NSLog(@"%@",[NSString stringWithFormat:@"%@", error]);
+        
+    }];
+}
+#pragma mark login;
+
+-(IBAction)onTouchBtnHideEmailSignup:(id)sender
+{
+    [self.view endEditing:YES];
+    mTxtSignupEmail.text = @"";
+    mTxtSignupFirstName.text = @"";
+    mTxtSignupLastName.text = @"";
+    mTxtSignupPassword.text = @"";
+    mTxtSignupConfirmPassword.text = @"";
+    [UIView animateWithDuration:0.3 delay:0.3 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        mViewEmailSignupContainer.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished){
+        mTxtSignupConfirmPassword.text = @"";
+        mTxtSignupEmail.text = @"";
+        mTxtSignupPassword.text = @"";
+        [mViewMaskBackground removeFromSuperview];
+    }];
+}
+-(IBAction)onTouchBtnCreateEmailLogin:(id)sender
+{
+
+    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [mViewEmailLoginContainer setAlpha:0];
+        
+    } completion:^(BOOL finished){
+        [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationOptionCurveEaseOut animations:^{
+             mViewEmailSignupContainer.transform = CGAffineTransformMakeTranslation(0,-(SCREEN_HEIGHT - 20));
+        } completion:nil];
+
+    }];
+    
+//    JProfileViewController *mViewProfile = [JProfileViewController sharedController];
+//    [self.navigationController pushViewController:mViewProfile animated:YES];
+}
+-(void) keyboardWillShow:(NSNotification *)note{
+    
+    NSDictionary *info = [note userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+}
+-(void) keyboardWillHide:(NSNotification *)note
+{
+    
+}
+-(IBAction)onTouchBtnCreateAccount:(id)sender
+{
+    if(mTxtSignupEmail.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_EMAIL_SHOULD_NOT_EMPTY];
+        
+        return;
+    }
+    if(![AppEngine validEmail: mTxtSignupEmail.text])
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_REGISTER_EMAIL_ADDRESS_NOT_VALID];
+        return;
+    }
+    if(mTxtSignupPassword.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_PASSWORD_SHOULD_NOT_EMPTY];
+        return;
+    }
+    if(mTxtSignupConfirmPassword.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_CONFIRM_PASSWORD_SHOULD_NOT_EMPTY];
+        return;
+    }
+    if(![mTxtSignupPassword.text isEqualToString:mTxtSignupConfirmPassword.text])
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_PASSWORD_CONFIRM_NOT_MATCH];
+        return;
+    }
+    if(mTxtSignupFirstName.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_FIRSTNAME_SHOULD_NOT_EMPTY];
+        return;
+    }
+    if(mTxtSignupLastName.text.length == 0)
+    {
+        [SVProgressHUD showErrorWithStatus:MSG_LASTNAME_SHOULD_NOT_EMPTY];
+        return;
+    }
+    
+    NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
+    [parameters setObject:[NSString stringWithFormat:@"%f",latitude] forKey:@"lat"];
+    [parameters setObject:[NSString stringWithFormat:@"%f",longitude] forKey:@"lgn"];
+    [parameters setObject:mTxtSignupEmail.text forKey:@"email"];
+    [parameters setObject:mTxtSignupPassword.text forKey:@"password"];
+    [parameters setObject:mTxtSignupFirstName.text forKey:@"firstname"];
+    [parameters setObject:mTxtSignupLastName.text forKey:@"lastname"];
+    
+    [parameters setObject:@"login_signup" forKey:@"type"];
+    [parameters setObject:@"register" forKey:@"cmd"];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    DataService *dataService = [DataService sharedDataService];
+    [dataService postWithParameters:parameters successHandler:^(id pUserArr) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showSuccessWithStatus:@"You are successfully registered! The verification mail has been sent." ];
+        [self onTouchBtnHideEmailSignup:nil];
+//        [[Engine gPersonInfo] setDataWithDictionary:pUserArr];
+//      [self onActionShowHome:nil];
+    } currentView:self.view];
+}
+
+#pragma mark facebook login
 -(IBAction)onTouchBtnFB:(id)sender
 {
 #if 0//test
