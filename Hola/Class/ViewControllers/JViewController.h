@@ -15,6 +15,7 @@
     IBOutlet UIButton *mBtnLogin;
     IBOutlet UIButton *mBtnFacebookLogin;
     IBOutlet UIButton *mBtnEmailLogin;
+    IBOutlet UIButton *mBtnSignUp;
 
     IBOutlet UIView *mViewEmailLoginContainer;
     IBOutlet UIView *mViewEmailLoginMainContainer;

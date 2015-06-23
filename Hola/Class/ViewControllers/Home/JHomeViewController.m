@@ -45,8 +45,6 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    
-    
     timer = [NSTimer scheduledTimerWithTimeInterval:5
                                              target:self
                                            selector:@selector(redisplayUserFeed:)
@@ -106,11 +104,10 @@
         [self setRadarViewAlphaTo:1.0f];
 //        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [mArrUsers removeAllObjects];
-       
-        [self.frontCardView removeFromSuperview];
-        [self.backCardView removeFromSuperview];
         self.frontCardView = nil;
         self.backCardView = nil;
+        [self.frontCardView removeFromSuperview];
+        [self.backCardView removeFromSuperview];
         [Engine setBUserSettingChanged:NO];
     }
     if([Engine isBackAction])
@@ -125,10 +122,8 @@
     if (mArrUsers.count == 0 && !self.frontCardView) {
         [self setRadarViewAlphaTo:1.0f];
         [Engine setBUserSettingChanged:NO];
-//        self.frontCardView = nil;
-//        self.backCardView = nil;
-//        [self.frontCardView removeFromSuperview];
-//        [self.backCardView removeFromSuperview];
+        [self.frontCardView removeFromSuperview];
+        [self.backCardView removeFromSuperview];
         [self getMatchedUsers];
     }
 }
@@ -140,8 +135,6 @@
 }
 -(void) getMatchedUsers
 {
-    [mArrUsers removeAllObjects];
-    
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"userid"];
     [parameters setObject:[Engine gPersonInfo].mUserId forKey:@"uId"];
@@ -151,7 +144,6 @@
     
     DataService *dataService = [DataService sharedDataService];
     [dataService postWithParameters:parameters successHandler:^(NSArray *pUserArr) {
-
         for(NSDictionary *pCurDict in pUserArr)
         {
             Person *pCurPerson = [[Person alloc]initWithDictionary:pCurDict];
@@ -386,7 +378,7 @@
     //    if([[Engine gMatchedPeopleList] count] > 0)
     //        return;
     CABasicAnimation *transformAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    transformAnimation.duration = 4;
+    transformAnimation.duration = 3;
     
     transformAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     transformAnimation.removedOnCompletion = YES;
@@ -404,19 +396,19 @@
     UIColor *fromColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
     UIColor *toColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:0];
     CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-    colorAnimation.duration = 4;
+    colorAnimation.duration = 3;
     colorAnimation.fromValue = (id)fromColor.CGColor;
     colorAnimation.toValue = (id)toColor.CGColor;
     [aLayer addAnimation:colorAnimation forKey:@"colorAnimationBG"];
     UIColor *fromColor1 = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
     UIColor *toColor1 = [UIColor colorWithRed:255 green:0 blue:0 alpha:0];
     CABasicAnimation *colorAnimation1 = [CABasicAnimation animationWithKeyPath:@"borderColor"];
-    colorAnimation1.duration = 4;
+    colorAnimation1.duration = 3;
     colorAnimation1.fromValue = (id)fromColor1.CGColor;
     colorAnimation1.toValue = (id)toColor1.CGColor;
     
     [aLayer addAnimation:colorAnimation1 forKey:@"colorAnimation"];
-    [self performSelector:@selector(waveAnimation:) withObject:waveLayer afterDelay:4];
+    [self performSelector:@selector(waveAnimation:) withObject:waveLayer afterDelay:3];
 
 }
 

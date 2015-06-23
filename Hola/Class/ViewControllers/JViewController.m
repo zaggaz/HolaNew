@@ -75,6 +75,14 @@
     [mBtnLogin.layer setBorderColor:[UIColor whiteColor].CGColor];
     [mBtnLogin.layer setBorderWidth:1.0f];
     
+    [mBtnSignUp.layer setCornerRadius:3.0f];
+    [mBtnSignUp.layer setBorderColor:[UIColor whiteColor].CGColor];
+    [mBtnSignUp.layer setBorderWidth:1.0f];
+    
+    [mBtnCreateAccount.layer setCornerRadius:3.0f];
+    [mBtnCreateAccount.layer setBorderColor:[UIColor whiteColor].CGColor];
+    [mBtnCreateAccount.layer setBorderWidth:1.0f];
+    
     [mBtnFacebookLogin.layer setCornerRadius:3.0f];
     [mBtnFacebookLogin.layer setBorderColor:[UIColor whiteColor].CGColor];
     [mBtnFacebookLogin.layer setBorderWidth:1.0f];
@@ -112,9 +120,6 @@
     
     
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:mBtnCreateAccount.titleLabel.text];
-    [attributeString addAttribute:NSUnderlineStyleAttributeName
-                            value:[NSNumber numberWithInt:1]
-                            range:(NSRange){0,[attributeString length]}];
     [mBtnCreateAccount setAttributedTitle:attributeString forState:UIControlStateNormal];
     
 }
@@ -411,20 +416,8 @@
             
             NSDictionary *data = [dict objectForKey: @"data"];
             NSString *error1 = [data objectForKey: @"error"];
-            
-            if([error1 isEqualToString:@"1"])
-            {
-                if([[data objectForKey:@"result"] isEqualToString:@"user_is_blocked"])
-                {
-                    //[SVProgressHUD showErrorWithStatus:MSG_USER_BLOCKED];
-                    return;
-                }
-                [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-            }
-            else
-            {
-                [SVProgressHUD dismiss];
-                if([[data objectForKey:@"error"] isEqualToString:@"0"])
+
+                if([error1 isEqualToString:@"0"])
                 {
                     [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
                     
@@ -440,17 +433,17 @@
                     [self onTouchBtnHideEmailLogin:nil];
                     [self onActionShowHome:nil];
                 }
-                else if([[data objectForKey:@"error"] isEqualToString:@"1"])
+                else if([error1 isEqualToString:@"1"])
                 {
                     [SVProgressHUD showErrorWithStatus:MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH];
                     return ;
                 }
-                else if([[data objectForKey:@"error"] isEqualToString:@"2"])
+                else if([error1 isEqualToString:@"2"])
                 {
                     [SVProgressHUD showErrorWithStatus:MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH];
                     return ;
                 }
-            }
+            
         }
         else
         {

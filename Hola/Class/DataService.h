@@ -13,5 +13,5 @@
 }
 
 + (id)sharedDataService;
--(void)postWithParameters:(NSMutableDictionary *)params successHandler:(void(^)(id))successHandler currentView:(UIView *)view;
+-(void)postWithParameters:(NSMutableDictionary *)params successHandler:(void(^)(NSArray*))successHandler currentView:(UIView *)view;
 @end

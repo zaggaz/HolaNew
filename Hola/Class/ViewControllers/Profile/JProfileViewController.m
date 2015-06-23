@@ -103,12 +103,9 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    if(![Engine isBackAction])
-    {
-        [self initProfileEditView];
-    }
-    else
-        [Engine setIsBackAction:YES];
+
+    [self initProfileEditView];
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
