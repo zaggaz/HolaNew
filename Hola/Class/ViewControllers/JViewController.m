@@ -440,7 +440,7 @@
                 }
                 else if([error1 isEqualToString:@"2"])
                 {
-                    [SVProgressHUD showErrorWithStatus:MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH];
+                    [SVProgressHUD showErrorWithStatus:MSG_ACTIVATE_ACCOUNT];
                     return ;
                 }
             
@@ -552,7 +552,7 @@
     [parameters setObject:@"register" forKey:@"cmd"];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     DataService *dataService = [DataService sharedDataService];
-    [dataService postWithParameters:parameters successHandler:^(id pUserArr) {
+    [dataService postWithParameters:parameters successHandler:^(NSArray* pUserArr) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [SVProgressHUD dismiss];
         [SVProgressHUD showSuccessWithStatus:@"You are successfully registered! The verification mail has been sent." ];

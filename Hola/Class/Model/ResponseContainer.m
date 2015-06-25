@@ -17,7 +17,9 @@
 
 - (id) initWithResponseData: (NSData *)data {
     if (self = [super init]) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:(NSData *)data options:NSJSONReadingAllowFragments error:nil];
+        NSError *error = nil;
+        
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:(NSData *)data options:NSJSONReadingAllowFragments error:&error];
         NSString *successString = [dict objectForKey: @"success"];
         if ([successString isEqualToString: @"1"]) {
             [self setSuccess:YES];

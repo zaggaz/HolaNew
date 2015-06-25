@@ -102,7 +102,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="mXI-yx-hg6">
+                <view hidden="YES" contentMode="scaleToFill" id="mXI-yx-hg6">
                     <rect key="frame" x="44" y="460" width="232" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <subviews>

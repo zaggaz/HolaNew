@@ -105,7 +105,7 @@
 #define MSG_PASSWORD_CONFIRM_NOT_MATCH @"Password confirmation doesn't match."
 #define MSG_REGISTER_EMAIL_ADDRESS_NOT_VALID @"Please enter valid email address."
 #define MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH @"Please enter valid email or password."
-#define MSG_LOGIN_EMAIL_PASSWORD_NOT_MATCH @"Please activate your account."
+#define MSG_ACTIVATE_ACCOUNT @"Please activate your account."
 
 #define MSG_PASSWORD_SHOULD_NOT_EMPTY @"Please enter password."
 #define MSG_FIRSTNAME_SHOULD_NOT_EMPTY @"Please enter first name."
