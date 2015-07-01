@@ -133,6 +133,8 @@
     NSMutableDictionary *menuItem = [arrOfOptions objectAtIndex:indexPath.row];    
     [[NSNotificationCenter defaultCenter]postNotificationName:[menuItem objectForKey:@"segue"] object:nil];
 }
+- (IBAction)onTouchPrivacy:(id)sender {
+}
 
 
 @end

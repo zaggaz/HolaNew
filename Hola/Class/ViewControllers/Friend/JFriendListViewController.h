@@ -11,6 +11,8 @@
 @interface JFriendListViewController : UIViewController<UIGestureRecognizerDelegate>
 {
     IBOutlet UITableView *mTvUserList;
+    IBOutlet UILabel *noMatchesLabel;
+
     int mPage;
 }
 @property(nonatomic, strong)NSMutableArray *mArrMatchList;

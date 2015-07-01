@@ -12,7 +12,7 @@
 
 @property (nonatomic) BOOL error;
 @property (nonatomic) NSString *error_type;
-@property (nonatomic) id data;
+@property (nonatomic) NSObject* data;
 
 - (id) initWithDictionary: (NSDictionary *)dataDictionary;
 

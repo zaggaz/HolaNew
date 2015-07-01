@@ -8,8 +8,11 @@
 
 #import "AppDelegate.h"
 #import "JViewController.h"
+#import "DataService.h"
+#import "LocalNotification.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import <Parse/Parse.h>
+
 @interface AppDelegate ()
 
 @end
@@ -18,13 +21,13 @@
 @synthesize mMainViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self checkIfDatabaseHasBeenReset];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    
+
     // Override point for customization after application launch.
     mMainViewController = [JViewController sharedController];
     UINavigationController* viewController = [ [ UINavigationController alloc ] initWithRootViewController:mMainViewController ] ;
@@ -155,9 +158,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
+- (void)applicationWillEnterForeground:(UIApplication *)application {}
 
-}
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [FBAppEvents activateApp];
@@ -179,6 +181,43 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
     [self saveContext];
 }
 
+-(void)checkIfDatabaseHasBeenReset{
+    NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
+    [parameters setObject:@"reset_count" forKey:@"type"];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *version = [defaults objectForKey:@"resetversion"];
+    
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+        //NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
+        NSString *res = [dict objectForKey: @"success"];
+        if ([res isEqualToString: @"1"])
+        {
+            
+            NSDictionary *data = [dict objectForKey: @"data"];
+            NSString *error1 = [data objectForKey: @"error"];
+            NSString *newVersion = [data objectForKey:@"result"];
+            if([error1 isEqualToString:@"0"])
+            {
+                NSInteger versionInt = [version integerValue];
+                NSInteger newVersionInt = [newVersion integerValue];
+
+                if (versionInt != 0 && newVersionInt > versionInt) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGOUT object:nil];
+                    [LocalNotification showNotificationWithString:@"Database has been reset, please login again."];
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setObject:newVersion forKey:@"resetversion"];
+                }
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
+    }];
+
+}
 #pragma mark - Core Data stack
 
 @synthesize managedObjectContext = _managedObjectContext;

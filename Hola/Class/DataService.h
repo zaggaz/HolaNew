@@ -9,9 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface DataService : NSObject {
-    void (^_postSuccessHandler)(NSDictionary *data);
 }
 
 + (id)sharedDataService;
+
 -(void)postWithParameters:(NSMutableDictionary *)params successHandler:(void(^)(NSArray*))successHandler currentView:(UIView *)view;
+
+-(void)postWithParameters:(NSMutableDictionary *)params successHandler:(void(^)(NSArray*))successHandler errorHandler:(void(^)())errorHandler currentView:(UIView *)view;
+
+-(void)postWithParameters:(NSMutableDictionary *)params successHandler:(void(^)(NSArray*))successHandler errorHandler:(void(^)())errorHandler currentView:(UIView *)view  showLoading:(BOOL)showLoading;
 @end

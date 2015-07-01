@@ -32,9 +32,7 @@
 -(bool)connected {
     return [AFNetworkReachabilityManager sharedManager].reachable;
 }
-
 - (void)viewDidLoad {
-    
     [mSegLookingFor setFrame:CGRectMake(mSegLookingFor.frame.origin.x, mSegLookingFor.frame.origin.y, mSegLookingFor.frame.size.width, 25)];
     
     mSwitchPush = [[SevenSwitch alloc]init];
@@ -293,7 +291,6 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        //NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
         
         NSString *res = [dict objectForKey: @"success"];

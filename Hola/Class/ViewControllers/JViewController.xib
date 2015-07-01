@@ -23,6 +23,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JViewController">
             <connections>
+                <outlet property="loginIndicator" destination="bbb-p1-sqP" id="KeQ-75-Yrq"/>
                 <outlet property="mBtnCreateAccount" destination="dZf-vs-BpS" id="DhQ-RI-C4V"/>
                 <outlet property="mBtnEmailLogin" destination="fdL-Vf-rjg" id="fz9-8y-DXd"/>
                 <outlet property="mBtnFacebookLogin" destination="mdG-tp-qzH" id="SEA-Ju-MlN"/>
@@ -99,10 +100,14 @@
                                 <action selector="onTouchBtnFB:" destination="-1" eventType="touchUpInside" id="pbU-3Z-Zr1"/>
                             </connections>
                         </button>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" id="bbb-p1-sqP">
+                            <rect key="frame" x="204" y="12" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" id="mXI-yx-hg6">
+                <view contentMode="scaleToFill" id="mXI-yx-hg6">
                     <rect key="frame" x="44" y="460" width="232" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <subviews>

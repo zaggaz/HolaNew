@@ -127,7 +127,7 @@
                 [SVProgressHUD dismiss];
                 if([[data objectForKey:@"error"] isEqualToString:@"0"])
                 {
-                    NSDictionary *pDict = [data objectForKey:@"user"];
+                    NSDictionary *pDict = [data objectForKey:@"result"];
                     NSArray *photos = [data objectForKey:@"photos"];
                     if(!mCurPerson)
                         mCurPerson = [[Person alloc]setDataWithDictionary:pDict];

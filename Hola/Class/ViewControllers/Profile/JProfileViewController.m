@@ -266,11 +266,10 @@
             
             if(photoType == PHOTO_TYPE_MAIN)
             {
-                mImgProfilePhotoEdit.image = [_info valueForKey: UIImagePickerControllerEditedImage];
-                
+                [self uploadProfileMainPhoto:[_info valueForKey: UIImagePickerControllerEditedImage]];
                 [_picker dismissViewControllerAnimated : YES completion : ^{
                 }];
-                [self uploadProfileMainPhoto];
+                
             }
             else if(photoType == PHOTO_TYPE_ADDITIONAL)
             {
@@ -283,7 +282,7 @@
         }
     }
 }
--(void)uploadProfileMainPhoto
+-(void)uploadProfileMainPhoto:(UIImage*)img
 {
     [mIndicatorProfileMainPhoto startAnimating];
     mBtnAddMainPhoto.enabled=NO;
@@ -308,12 +307,11 @@
             manager.responseSerializer = [AFHTTPResponseSerializer serializer];
             
             [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                NSData *imageData=UIImageJPEGRepresentation(mImgProfilePhotoEdit.image, 0.8);
+                NSData *imageData=UIImageJPEGRepresentation(img, 0.8);
                 [formData appendPartWithFileData:imageData name:@"photo" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
                 
                 
             } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                
                 NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
                 NSString *res = [dict objectForKey: @"success"];
                 //  NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
@@ -332,10 +330,11 @@
                     else
                     {
                         [SVProgressHUD dismiss];
-                        [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
+                        [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
                         [[NSNotificationCenter defaultCenter] postNotificationName: PROFILE_PICTURE_CHANGED object: nil];
-
                     }
+                    [mImgProfilePhotoEdit setImageWithURL:[NSURL URLWithString:[Engine gPersonInfo].mPhotoUrl]]; // need to be changed as thumb
+
                     [mIndicatorProfileMainPhoto stopAnimating];
                     mBtnAddMainPhoto.enabled=YES;
                 }
@@ -405,7 +404,7 @@
                     }
                     else
                     {
-                        [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
+                        [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
                         if([[Engine gPersonInfo].mArrPic count] > 4)
                         {
                             [mBtnAddMorePhoto setHidden:YES];
@@ -575,7 +574,7 @@
                         else
                         {
 
-                            [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
+                            [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
                             [mBtnAddMorePhoto setHidden:NO];
                             //[self initView];
                             [self initProfileEditView];
@@ -729,7 +728,7 @@
             else
             {
                 [SVProgressHUD dismiss];
-                [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
+                [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
                 [self onTapBackground:nil];
                  [[NSNotificationCenter defaultCenter]postNotificationName:SHOW_MAIN_VIEW object:nil];
              //   [self hideEditView];

@@ -1,6 +1,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "JASidePanelController.h"
+#import "NMRangeSlider.h"
 #import "Constants.h"
 
 static char ja_kvoContext;
@@ -565,6 +566,14 @@ static char ja_kvoContext;
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_centerPanelTapped:)];
     [view addGestureRecognizer:tapGesture];	
 }
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if ([touch.view isKindOfClass:[UISlider class]] || [touch.view isKindOfClass:[NMRangeSlider class]]) {
+        // prevent recognizing touches on the slider
+        return NO;
+    }
+    return YES;}
 
 - (void)_centerPanelTapped:(__unused UIGestureRecognizer *)gesture {
     [self _showCenterPanel:YES bounce:NO];

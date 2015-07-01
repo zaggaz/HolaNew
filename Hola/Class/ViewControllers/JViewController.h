@@ -31,6 +31,9 @@
     IBOutlet UITextField *mTxtSignupFirstName;
     IBOutlet UITextField *mTxtSignupLastName;
     
+    IBOutlet UIActivityIndicatorView *loginIndicator;
+
+    
     float latitude;
     float longitude;
     

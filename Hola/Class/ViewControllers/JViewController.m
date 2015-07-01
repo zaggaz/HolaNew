@@ -15,6 +15,8 @@
 #import "JMatchViewController.h"
 #import "JChatViewController.h"
 #import "JUserSettingViewController.h"
+#import "LocalNotification.h"
+
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 
@@ -45,9 +47,17 @@
     [dataService postWithParameters:parameters successHandler:^(NSObject *result) {
     } currentView:self.view];
 };
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:[UISlider class]]) {
+        // prevent recognizing touches on the slider
+        return NO;
+    }
+    return YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    loginIndicator.hidesWhenStopped = YES;
     mJASidePanel = [[JASidePanelController alloc] init];
     mJASidePanel.shouldDelegateAutorotateToVisiblePanel = NO;
     mJASidePanel.navigationController.navigationBarHidden = TRUE;
@@ -322,6 +332,9 @@
 {
     [[NSNotificationCenter defaultCenter]postNotificationName:CLOSE_SIDE_VIEW object:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setPersistentDomain:[NSDictionary dictionary] forName:[[NSBundle mainBundle] bundleIdentifier]];
+    [defaults synchronize];
+
     if ([defaults objectForKey:@"current_user"]) {
         [defaults removeObjectForKey:@"current_user"];
         [defaults synchronize];
@@ -565,18 +578,8 @@
 #pragma mark facebook login
 -(IBAction)onTouchBtnFB:(id)sender
 {
-#if 0//test
-    NSMutableDictionary *json = [[NSMutableDictionary alloc]init];
-    [json setObject:@"jin.wang@gmail.com" forKey:@"email"];
-    [json setObject:@"Jin" forKey:@"first_name"];
-    [json setObject:@"Wang" forKey:@"last_name"];
-    [json setObject:@"343" forKey:@"id"];
-    [self doProcessFBLogin:json login_type:@"facebook"];
-    //[self setLoginWithEmail:json login_type:@"facebook"];
-#else
     [self openFacebookAuthentication];
     return;
-#endif
 }
 -(void)openFacebookAuthentication
 {
@@ -629,11 +632,10 @@
 }
 - (void) facebookLoaded
 {
-    
-    [SVProgressHUD showWithStatus:MSG_LOADING];
-    
+    [loginIndicator startAnimating];
+
     //    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/me?access_token=%@&fields=id,birthday,email,first_name,last_name",[[[FBSession activeSession] accessTokenData] accessToken]];
+    NSString *url = [NSString stringWithFormat:@"https://graph.facebook.com/me?access_token=%@&fields=id,birthday,email,first_name,last_name,gender",[[[FBSession activeSession] accessTokenData] accessToken]];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[[[FBSession activeSession] accessTokenData] accessToken] forKey:@"FBAccessTokenKey"];
@@ -679,10 +681,10 @@
     NSString *gender = @"1";
     if([[inDict objectForKey:@"gender"] isEqualToString:@"male"])
         gender = @"0";
-    //NSLog(@"Dictionary%@",inDict);
-    NSDictionary* parameters;
+
+    NSMutableDictionary* parameters;
     if([login_type isEqualToString:@"facebook"])
-        parameters = [[NSDictionary alloc] initWithObjectsAndKeys:
+        parameters = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
                       @"login_signup",@"type",
                       @"login",@"cmd",
                       @"facebook",@"usertype",
@@ -697,48 +699,26 @@
                       nil];
     [self doFinalizeLogin:parameters];
 }
--(void) doFinalizeLogin :(NSDictionary *)parameters
+-(void) doFinalizeLogin :(NSMutableDictionary *)parameters
 {
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
-        NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
-        
-        NSString *res = [dict objectForKey: @"success"];
-        if ([res isEqualToString: @"1"])
+    DataService *dataService = [DataService sharedDataService];
+
+    [dataService postWithParameters:parameters successHandler:^(id response) {
+        [[Engine gPersonInfo] setDataWithDictionary:response];
+        if([response objectForKey:@"photos"])
         {
-            
-            NSDictionary *data = [dict objectForKey: @"data"];
-            NSString *error1 = [data objectForKey: @"error"];
-            
-            if([error1 isEqualToString:@"1"])
+            //   [Engine gPersonInfo].mArrPic =
+            for(int i = 0; i < [[response objectForKey:@"photos"] count]; i++)
             {
-                [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-            }
-            else
-            {
-                [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"user"]];
-            
-                if([data objectForKey:@"photos"])
-                {
-                    //   [Engine gPersonInfo].mArrPic =
-                    for(int i = 0; i < [[data objectForKey:@"photos"] count]; i++)
-                    {
-                        JPictureInfo *pCurPhoto = [[JPictureInfo alloc]initWithDictionary:[[data objectForKey:@"photos"] objectAtIndex:i]];
-                        [[Engine gPersonInfo].mArrPic addObject:pCurPhoto];
-                    }
-                }
-                [SVProgressHUD dismiss];
-                [self onActionShowHome:nil];
+                JPictureInfo *pCurPhoto = [[JPictureInfo alloc]initWithDictionary:[[response objectForKey:@"photos"] objectAtIndex:i]];
+                [[Engine gPersonInfo].mArrPic addObject:pCurPhoto];
             }
         }
-        else
-        {
-            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-            
-        }
-        
-    } failure:nil];
+        [loginIndicator stopAnimating];
+        [self onActionShowHome:nil];
+
+    } errorHandler:^(){
+        [loginIndicator stopAnimating];
+    } currentView:self.view];
 }
 @end

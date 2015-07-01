@@ -100,7 +100,8 @@ UIEdgeInsets scrollViewOriginalContentInsets;
 }
 
 - (BOOL)showsInfiniteScrolling {
-    return !self.infiniteScrollingView.hidden;
+    // return !self.infiniteScrollingView.hidden;
+    return self.showsInfiniteScrolling = self.contentSize.height < self.frame.size.height ? NO : YES;
 }
 
 @end

@@ -37,6 +37,7 @@
 #define PREFERED_WITH 640.0
 #define PREFERED_HEIGHT 1136.0
 
+#define PINKCOLOR                           [UIColor colorWithRed:0.984 green:0.42 blue:0.38 alpha:1]
 
 
 #define kTempMoviePath		([NSTemporaryDirectory() stringByAppendingPathComponent:@"temp.mov"])
@@ -87,7 +88,7 @@
 
 
 
-#define MSG_SERVICE_UNAVAILABLE @"Cannot connect. Please check your internet connection."
+#define MSG_SERVICE_UNAVAILABLE @"An error has occurred, please try again later."
 #define MSG_SERVICE_DUPLICATE_EMAIL @"The email was already registered."
 #define MSG_INVALID_TOKEN @"Your login has expired, please login again."
 

@@ -10,6 +10,8 @@
 #import "SevenSwitch.h"
 #import "CERangeSlider.h"
 #import "NMRangeSlider.h"
+#import <UIKit/UIGestureRecognizerSubclass.h>
+
 
 @interface JUserSettingViewController : UIViewController
 {
@@ -39,5 +41,5 @@
     IBOutlet UIButton *mBtnWeChatShare;
 }
 + ( JUserSettingViewController* ) sharedController;
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch;
 @end

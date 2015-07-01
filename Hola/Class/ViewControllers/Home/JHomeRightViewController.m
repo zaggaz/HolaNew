@@ -9,6 +9,7 @@
 #import "JHomeRightViewController.h"
 #import "Person.h"
 #import "JFriendCellTableViewCell.h"
+#import "LocalNotification.h"
 #import "JMatchedFriendTableViewCell.h"
 #import "JMatchViewController.h"
 #import "JChatViewController.h"
@@ -48,10 +49,16 @@
     __block JHomeRightViewController *viewController = self;
     [mTvUserList addPullToRefreshWithActionHandler:^{
         [viewController  insertRowAtTop];
+        [mTvUserList showsInfiniteScrolling];
     }];
     [mTvUserList addInfiniteScrollingWithActionHandler:^{
         [viewController insertRowAtBottom];
     }];
+    mTvUserList.pullToRefreshView.textColor = [UIColor darkGrayColor];
+    mTvUserList.pullToRefreshView.arrowColor = [UIColor darkGrayColor];
+    mTvUserList.pullToRefreshView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
+
+
     [self getUserConnectionDetails:0];
     mArrData = [[NSMutableArray alloc]init];
     mDictData = [[NSMutableDictionary alloc]init];
@@ -66,7 +73,7 @@
     }
     else
     {
-        //[mTableMatchView reloadData];
+        mTvUserList.triggerPullToRefresh;
         [self getUserConnectionDetails:0];
     }
 }
@@ -97,7 +104,6 @@
     if(nPage ==0 && [Engine isBackAction] == NO)
     {
         [Engine setIsBackAction:YES];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     NSInteger iShowType =  CONNECTION_SHOWTYPE_MATCH;
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
@@ -156,15 +162,13 @@
                 [mArrUserList addObject : curPerson ];
             }
             [mTvUserList reloadData];
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         }
         else
         {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+            [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

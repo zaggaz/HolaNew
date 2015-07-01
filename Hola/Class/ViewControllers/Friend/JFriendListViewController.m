@@ -8,6 +8,8 @@
 
 #import "JFriendListViewController.h"
 #import "JFriendCellTableViewCell.h"
+#import "LocalNotification.h"
+
 #import "JMatchViewController.h"
 #import "JChatViewController.h"
 #import "SVPullToRefresh.h"
@@ -38,12 +40,14 @@
     __block JFriendListViewController *viewController = self;
     [mTvUserList addPullToRefreshWithActionHandler:^{
         [viewController  insertRowAtTop];
+        [mTvUserList showsInfiniteScrolling];
     }];
     [mTvUserList addInfiniteScrollingWithActionHandler:^{
         [viewController insertRowAtBottom];
     }];
 
     [self getUserConnectionDetails:0];
+    [noMatchesLabel setHidden:YES];
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -55,8 +59,8 @@
 //    else
 //    {
         //[mTableMatchView reloadData];
-        [self getUserConnectionDetails:0];
-        
+    [mTvUserList triggerPullToRefresh];
+    
 //    }
 }
 - (void)insertRowAtTop {
@@ -87,7 +91,6 @@
     if(nPage ==0 && [Engine isBackAction] == NO)
     {
         [Engine setIsBackAction:YES];
-        [MBProgressHUD showHUDAddedTo:mTvUserList animated:YES];
     }
     NSInteger iShowType =  CONNECTION_SHOWTYPE_ALL;
     NSMutableDictionary* parameters=[[NSMutableDictionary alloc]init];
@@ -116,17 +119,16 @@
             
             NSDictionary *data = [dict objectForKey: @"data"];
             NSString *error1 = [data objectForKey: @"error"];
-            [MBProgressHUD hideAllHUDsForView:mTvUserList animated:YES];
             if([error1 isEqualToString:@"1"])
             {
-                [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+                [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
             }
             else
             {
                 [SVProgressHUD dismiss];
                 
                 NSArray *postList = [data objectForKey:@"result"];
-                
+
                 if(iShowType == CONNECTION_SHOWTYPE_ALL)
                 {
                     if(nPage == 0)
@@ -141,16 +143,21 @@
                         [mArrMatchList addObject:p];
                     }
                 }
+                if ([mArrMatchList count] < 1){
+                    [noMatchesLabel setHidden:NO];
+                }
+                else {
+                    [noMatchesLabel setHidden:YES];
+                }
                 [mTvUserList reloadData];
             }
         }
         else
         {
-            [MBProgressHUD hideAllHUDsForView:mTvUserList animated:YES];
-            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+            [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:mTvUserList animated:YES];
+        [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
     }];
     
 }
