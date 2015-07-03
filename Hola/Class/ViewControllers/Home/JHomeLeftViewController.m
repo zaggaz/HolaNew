@@ -134,6 +134,8 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:[menuItem objectForKey:@"segue"] object:nil];
 }
 - (IBAction)onTouchPrivacy:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://letshola.com/privacy-policy/index.html"]];
+
 }
 
 
