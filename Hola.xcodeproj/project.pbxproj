@@ -108,7 +108,6 @@
 		522AD4991AFFA72B0044DA85 /* typebox-strip-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522AD4421AFFA72B0044DA85 /* typebox-strip-bg@2x.png */; };
 		522AD49A1AFFA72B0044DA85 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 522AD4431AFFA72B0044DA85 /* logo.png */; };
 		522AD49B1AFFA72B0044DA85 /* logo2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522AD4441AFFA72B0044DA85 /* logo2@2x.png */; };
-		522AD49C1AFFA72B0044DA85 /* Archive.zip in Resources */ = {isa = PBXBuildFile; fileRef = 522AD4461AFFA72B0044DA85 /* Archive.zip */; };
 		522AD49D1AFFA72B0044DA85 /* splash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 522AD4471AFFA72B0044DA85 /* splash@2x.png */; };
 		52318F231B3418E400462C29 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52318F1E1B3418E400462C29 /* Bolts.framework */; };
 		52318F241B3418E400462C29 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52318F1F1B3418E400462C29 /* Parse.framework */; };
@@ -481,6 +480,7 @@
 		D68FAAA41B24B7EC00DD6C7F /* DataService.m in Sources */ = {isa = PBXBuildFile; fileRef = D68FAAA31B24B7EC00DD6C7F /* DataService.m */; };
 		D68FAAA71B24D6A700DD6C7F /* ResponseContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D68FAAA61B24D6A700DD6C7F /* ResponseContainer.m */; };
 		D68FAAAD1B24DD8000DD6C7F /* ResponseData.m in Sources */ = {isa = PBXBuildFile; fileRef = D68FAAAC1B24DD8000DD6C7F /* ResponseData.m */; };
+		D6954EC41B470718004A4F8A /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = D6954EC31B470718004A4F8A /* tick.png */; };
 		D6B612461B1B461D00B9539D /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612431B1B461D00B9539D /* Lato-Bold.ttf */; };
 		D6B612471B1B461D00B9539D /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612441B1B461D00B9539D /* Lato-Light.ttf */; };
 		D6B612481B1B461D00B9539D /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6B612451B1B461D00B9539D /* Lato-Regular.ttf */; };
@@ -615,7 +615,6 @@
 		522AD4421AFFA72B0044DA85 /* typebox-strip-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typebox-strip-bg@2x.png"; sourceTree = "<group>"; };
 		522AD4431AFFA72B0044DA85 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		522AD4441AFFA72B0044DA85 /* logo2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo2@2x.png"; sourceTree = "<group>"; };
-		522AD4461AFFA72B0044DA85 /* Archive.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = Archive.zip; sourceTree = "<group>"; };
 		522AD4471AFFA72B0044DA85 /* splash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "splash@2x.png"; sourceTree = "<group>"; };
 		52318F1E1B3418E400462C29 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Hola/Framework/parse-library-1.6.4/Bolts.framework"; sourceTree = "<group>"; };
 		52318F1F1B3418E400462C29 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = "Hola/Framework/parse-library-1.6.4/Parse.framework"; sourceTree = "<group>"; };
@@ -1144,6 +1143,7 @@
 		D68FAAA61B24D6A700DD6C7F /* ResponseContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseContainer.m; sourceTree = "<group>"; };
 		D68FAAAB1B24DD8000DD6C7F /* ResponseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseData.h; sourceTree = "<group>"; };
 		D68FAAAC1B24DD8000DD6C7F /* ResponseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseData.m; sourceTree = "<group>"; };
+		D6954EC31B470718004A4F8A /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tick.png; sourceTree = "<group>"; };
 		D6B612431B1B461D00B9539D /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		D6B612441B1B461D00B9539D /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		D6B612451B1B461D00B9539D /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
@@ -1360,7 +1360,6 @@
 				522AD4181AFFA72B0044DA85 /* images */,
 				522AD4431AFFA72B0044DA85 /* logo.png */,
 				522AD4441AFFA72B0044DA85 /* logo2@2x.png */,
-				522AD4451AFFA72B0044DA85 /* sample_photos */,
 				522AD4471AFFA72B0044DA85 /* splash@2x.png */,
 			);
 			path = Resources;
@@ -1369,6 +1368,7 @@
 		522AD3ED1AFFA72B0044DA85 /* icon */ = {
 			isa = PBXGroup;
 			children = (
+				D6954EC31B470718004A4F8A /* tick.png */,
 				529682D61B356E3300C75325 /* closebtn.png */,
 				529682D71B356E3300C75325 /* closebtn@2x.png */,
 				52456B141B01267C004607CF /* btn_dislike.png */,
@@ -1492,14 +1492,6 @@
 				522AD4401AFFA72B0044DA85 /* btn-toggle-on@2x.png */,
 			);
 			path = toggle;
-			sourceTree = "<group>";
-		};
-		522AD4451AFFA72B0044DA85 /* sample_photos */ = {
-			isa = PBXGroup;
-			children = (
-				522AD4461AFFA72B0044DA85 /* Archive.zip */,
-			);
-			path = sample_photos;
 			sourceTree = "<group>";
 		};
 		5234D7541AED610F00AE98F4 /* ShareSDK */ = {
@@ -2744,6 +2736,7 @@
 				5234D7D81AED611000AE98F4 /* WeiboSDK.bundle in Resources */,
 				5234D7E41AED611000AE98F4 /* ShareSDKiPadDefaultShareViewUI.bundle in Resources */,
 				5234D7EB1AED611000AE98F4 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
+				D6954EC41B470718004A4F8A /* tick.png in Resources */,
 				527D72FD1B0253CD00729025 /* btnIconNext.png in Resources */,
 				527D72F51B0253CD00729025 /* btnIconContacts.png in Resources */,
 				522AD4771AFFA72B0044DA85 /* 29_3.PNG in Resources */,
@@ -2805,7 +2798,6 @@
 				527D72D11B0253CD00729025 /* bgBottomMenu.png in Resources */,
 				527D73201B0253CD00729025 /* chat_right_redbg.png in Resources */,
 				52895D2E1AFFC6C60019D6DD /* user_placeholder.png in Resources */,
-				522AD49C1AFFA72B0044DA85 /* Archive.zip in Resources */,
 				527D72EA1B0253CD00729025 /* btnIconCamera_Light@2x.png in Resources */,
 				527D72F41B0253CD00729025 /* btnIconCollection_High@2x.png in Resources */,
 				527D73031B0253CD00729025 /* btnIconSetting.png in Resources */,

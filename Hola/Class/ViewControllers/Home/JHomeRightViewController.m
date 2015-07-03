@@ -46,6 +46,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [noChatsLabel setHidden:YES];
     __block JHomeRightViewController *viewController = self;
     [mTvUserList addPullToRefreshWithActionHandler:^{
         [viewController  insertRowAtTop];
@@ -67,15 +68,13 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if([Engine isBackAction] == YES)
-    {
-        [Engine setIsBackAction: NO];
-    }
-    else
-    {
-        mTvUserList.triggerPullToRefresh;
-        [self getUserConnectionDetails:0];
-    }
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(loadChat:) name: HOME_RIGHTBTN_TOUCH object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(loadChat:) name: BACK_TO_MAIN_VIEW object: nil];
+}
+
+-(void)loadChat:(id)sender{
+    __block JHomeRightViewController *viewController = self;
+    [viewController  insertRowAtTop];
 }
 - (void)insertRowAtTop {
     
@@ -161,6 +160,8 @@
                 Person *curPerson = [[Person alloc] initWithDictionary:[feed objectForKey:@"person"]];
                 [mArrUserList addObject : curPerson ];
             }
+            [noChatsLabel setHidden:[mArrUserList count] > 0];
+
             [mTvUserList reloadData];
         }
         else

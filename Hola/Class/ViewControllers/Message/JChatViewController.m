@@ -17,8 +17,8 @@
 #import "JChatTableCell.h"
 #import "JHomeDetailViewController.h"
 
-#define THUMBNAIL_WIDTH 150.0
-#define THUMBNAIL_HEIGHT 150.0
+#define THUMBNAIL_WIDTH 220.0
+#define THUMBNAIL_HEIGHT 220.0
 #define PREFERED_WIDTH 480
 #define PREFERED_HEIGHT 480
 #define PREFERED_RATIO 1//1136.0/640.0
@@ -104,6 +104,7 @@
 -(IBAction)onTouchBtnLeftMenu:(id)sender
 {
   //  [[NSNotificationCenter defaultCenter] postNotificationName: HOME_LEFTBTN_TOUCH object: nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName: HOME_RIGHTBTN_TOUCH object: nil];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -193,7 +194,7 @@
         {
             [mBtnSend setEnabled:NO];
         }
-        else
+        else if(!mIsPause)
         {
             [mBtnSend setEnabled:YES];
         }
@@ -882,7 +883,7 @@
         mIsPhotoUploading=YES;
         mBtnPhotoSend.enabled=NO;
         [self setMFileNameToUpload:[self fileKeyForUpload]];
-        [self uploadProfilePhoto:mImgPreview.image quality:0.8];
+        [self uploadProfilePhoto:mImgPreview.image quality:1];
         [mPhotoNotifMessage setText:@"Sending photo..."];
         
         //-----again---

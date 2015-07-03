@@ -61,6 +61,7 @@
     mJASidePanel = [[JASidePanelController alloc] init];
     mJASidePanel.shouldDelegateAutorotateToVisiblePanel = NO;
     mJASidePanel.navigationController.navigationBarHidden = TRUE;
+
     JHomeLeftViewController *homeLeftView = [JHomeLeftViewController sharedController];
     mJASidePanel.leftPanel = homeLeftView;
     
@@ -270,7 +271,7 @@
 }
 - (void)onCloseSideView: (NSNotification *)notification
 {
-    [mJASidePanel showCenterPanelAnimated:NO];
+    [mJASidePanel showCenterPanelAnimated:YES];
     if(notification.object)
     {
         UIViewController* viewController=(UIViewController*)notification.object;

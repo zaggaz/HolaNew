@@ -52,16 +52,14 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-//    if([Engine isBackAction] == YES)
-//    {
-//        [Engine setIsBackAction: NO];
-//    }
-//    else
-//    {
-        //[mTableMatchView reloadData];
-    [mTvUserList triggerPullToRefresh];
-    
-//    }
+    if([Engine isBackAction] == YES)
+    {
+        [Engine setIsBackAction: NO];
+    }
+    else
+    {
+        [mTvUserList triggerPullToRefresh];
+    }
 }
 - (void)insertRowAtTop {
     

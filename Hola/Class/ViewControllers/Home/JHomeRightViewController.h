@@ -12,7 +12,8 @@
 {
     IBOutlet UITableView *mTvUserList;
     int mPage;
-    
+    IBOutlet UILabel *noChatsLabel;
+
 }
 
 

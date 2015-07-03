@@ -70,6 +70,14 @@
     if (info == nil) {
         return;
     }
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    [mLblTime setText:
+     [dateFormatter stringFromDate:
+      [NSDate dateWithTimeIntervalSince1970:
+       [[info mTimeStamp] doubleValue]]]];
+    
     // if sender is me
     if([info.mMsgType isEqualToString:MESSAGE_TYPE_NOTE])
     {
@@ -85,37 +93,33 @@
             textSize.width=205;
         mLblMessage.frame = CGRectMake(xOffset, yOffset, textSize.width,textSize.height);
         [mLblMessage setText:[info mMsg]];
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"HH:mm"];
-        [mLblTime setText:
-         [dateFormatter stringFromDate:
-          [NSDate dateWithTimeIntervalSince1970:
-           [[info mTimeStamp] doubleValue]]]];
+     
         if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId]){
-            mLblTime.frame = CGRectMake(textSize.width - 5, yOffset + textSize.height + 7, 70, 14);
+            mLblTime.frame = CGRectMake(textSize.width - 5, yOffset + textSize.height + 7, 60, 14);
             mMessageView.frame = CGRectMake(242-textSize.width, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize + 5);
 
         }else {
             mMessageView.frame = CGRectMake(45, 5, textSize.width+(xOffset*2),textSize.height + (yOffset*2) + fontSize + 5);
-            mLblTime.frame = CGRectMake(5, yOffset + textSize.height + 7, 70, 14);
+            mLblTime.frame = CGRectMake(5, yOffset + textSize.height + 7, 60, 14);
 
         }
     }else {
         [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
         [mLblMessage setHidden:YES];
         [mImgMessageBg setHidden:YES];
-        mImgSharedPhoto.frame=CGRectMake(5,5,90,90);
+        mImgSharedPhoto.frame=CGRectMake(5,5,200,200);
         [mImgSharedPhoto.layer setBorderColor:[[UIColor lightGrayColor]CGColor]];
         [mImgSharedPhoto.layer setBorderWidth:0.5];
         [mImgSharedPhoto setHidden:NO];
-        
         mImgSharedPhoto.layer.masksToBounds=YES;
+        
         [mImgSharedPhoto.layer setCornerRadius:10];
-        [mImgSharedPhoto setImageWithURL:[NSURL URLWithString:info.mFileUrl] placeholderImage:[UIImage imageNamed:@"bgLightGray.png"]];
         if ([info.mUserId isEqualToString:[Engine gPersonInfo].mUserId]){
-            mMessageView.frame = CGRectMake(242-80, 20, 100,100);
+            mMessageView.frame = CGRectMake(62, 20, 210,230);
+            mLblTime.frame = CGRectMake(175, 207, 60, 14);
         }else {
-            mMessageView.frame = CGRectMake(45, 20, 100,100);
+            mMessageView.frame = CGRectMake(45, 20, 210,230);
+            mLblTime.frame = CGRectMake(5, 207, 60, 14);
         }
     }
     
@@ -182,10 +186,10 @@
     }
     else
     {
-        height=120;
+        height=240;
         
     }
-    return MAX(height, 40.0f);
+    return height;
 }
 
 @end

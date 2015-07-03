@@ -61,9 +61,9 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *currentDate = [NSDate date];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-    [comps setYear:-16];
+    [comps setYear:-SETTING_MIN_AGE];
     NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
-    [comps setYear:-100];
+    [comps setYear:-SETTING_MAX_AGE];
     NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
 
     [datePicker setMaximumDate:maxDate];
@@ -80,12 +80,6 @@
     [mTxtEditBirthday setInputAccessoryView:toolBar];
     
     [mScrollProfileEdit setContentSize:CGSizeMake(mViewProfileEditContainer.frame.size.width, mViewProfileEditContainer.frame.size.height + 60)];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentLoginStep = [defaults objectForKey:@"current_user_step"];
-    if([currentLoginStep isEqualToString : @"new"]) {
-        [mBtnShowSideLeftView setHidden:YES];
-    }
     
     [self initMedia];
 }
@@ -114,8 +108,16 @@
                                                 selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *currentLoginStep = [defaults objectForKey:@"current_user_step"];
+    if([currentLoginStep isEqualToString : @"new"]) {
+        [mBtnShowSideLeftView setHidden:YES];
+    }else {
+        [mBtnShowSideLeftView setHidden:NO];
+    }
     
-    if([[Engine gPersonInfo].mArrPic count] > 4)
+    if([[Engine gPersonInfo].mArrPic count] > 3)
     {
         [mBtnAddMorePhoto setHidden:YES];
     }
@@ -405,7 +407,7 @@
                     else
                     {
                         [[Engine gPersonInfo] setDataWithDictionary:[data objectForKey:@"result"]];
-                        if([[Engine gPersonInfo].mArrPic count] > 4)
+                        if([[Engine gPersonInfo].mArrPic count] > 3)
                         {
                             [mBtnAddMorePhoto setHidden:YES];
                         }

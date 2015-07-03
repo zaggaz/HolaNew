@@ -7,6 +7,7 @@
 //
 
 #import "JHomeDetailViewController.h"
+#import "LocalNotification.h"
 
 @interface JHomeDetailViewController ()
 
@@ -109,7 +110,7 @@
     AFHTTPRequestOperationManager *manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:WEB_SITE_BASE_URL]];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:WEB_SERVICE_RELATIVE_URL parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //NSLog(@"Error Data %@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+        NSLog(@"Data %@",[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
         NSDictionary *dict=[NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:NSJSONReadingAllowFragments error:nil];
         NSString *res = [dict objectForKey: @"success"];
         if ([res isEqualToString: @"1"])
@@ -145,12 +146,11 @@
         else
         {
             [MBProgressHUD hideHUDForView:mScrollMainView animated:YES];
-            [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
+            [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [SVProgressHUD showErrorWithStatus:MSG_SERVICE_UNAVAILABLE];
-        [MBProgressHUD hideHUDForView:mScrollMainView animated:YES];
-        
+        [LocalNotification showNotificationWithString:MSG_SERVICE_UNAVAILABLE];
     }];
     
 }

@@ -47,6 +47,8 @@
 
 #define HOME_LEFTBTN_TOUCH                    @"HOME_LEFTBTN_TOUCH"
 #define HOME_RIGHTBTN_TOUCH                   @"HOME_RIGHTBTN_TOUCH"
+#define BACK_TO_MAIN_VIEW                     @"BACK_TO_MAIN_VIEW"
+
 
 #define PANEL_LEFT_WILL_SHOW                  @"PANEL_LEFT_WILL_SHOW"
 #define PANEL_RIGHT_WILL_SHOW                 @"PANEL_RIGHT_WILL_SHOW"
@@ -116,7 +118,7 @@
 #define SETTING_MIN_AGE     18
 #define SETTING_MAX_AGE     45
 #define SETTING_MIN_DISTANCE 0
-#define SETTING_MAX_DISTANCE 100
+#define SETTING_MAX_DISTANCE 10000
 
 #define NOTIFICATION_SETTING_CHANGED          @"NOTIFICATION_SETTING_CHANGED"
 #define UPDATE_TOP_BADGE                      @"UPDATE_TOP_BADGE"
